@@ -26,6 +26,11 @@
   when:
     - not ufw_status_result.stdout is search("26656/tcp.*ALLOW IN.*Anywhere")
 
+- name: open ssh port
+  command: ufw allow {{ ssh_port }}/tcp
+  when:
+    - not ufw_status_result.stdout is search("{{ ssh_port }}/tcp.*ALLOW IN.*Anywhere")
+
 - name: enable firewall
   shell: |
     set -o pipefail

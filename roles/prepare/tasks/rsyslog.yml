@@ -1,0 +1,13 @@
+---
+    - name: Add ANSI handling line in /etc/rsyslog.conf
+      lineinfile:
+        path: '/etc/rsyslog.conf'
+        line: '$EscapeControlCharactersOnReceive off'
+        state: present
+      register: rsyslog_conf
+
+    - name: restart rsyslogd
+      service:
+        name: rsyslog
+        state: restarted
+      when: rsyslog_conf.changed
