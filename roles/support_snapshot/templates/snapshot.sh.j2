@@ -4,7 +4,8 @@ set -ex
 # prune node
 sudo service {{ network }} stop
 sleep 5
-/home/{{ user_dir }}/go/bin/cosmos-pruner prune ~/{{ folder }}/data --cosmos-sdk=false
+#{{ user_dir }}/go/bin/cosmos-pruner prune ~/{{ folder }}/data --cosmos-sdk=false
+{{ user_dir }}/go/bin/cosmos-pruner prune ~/{{ folder }}/data
 sleep 5
 
 # Make sure the service is running

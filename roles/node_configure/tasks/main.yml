@@ -73,6 +73,14 @@
     line: 'prometheus = true'
     state: present
 
+- name: Disable pex reactor on snapshot and main (validator) roles
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '^pex ='
+    line: 'pex = false'
+    state: present
+  when: type == 'backup' or type == 'main'
+
 - name: Configure statesync
   import_tasks: roles/support_state_sync/tasks/main.yml
   when: (use_statesync|bool == true) and (type == 'backup' or type == 'main')
