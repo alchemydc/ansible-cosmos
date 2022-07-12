@@ -1,8 +1,8 @@
 ---
-      - name: Disable visual copy/paste mode in vim
-        blockinfile:
-          path: '/etc/vim/vimrc.local'
-          block: |
-            set mouse-=a
-            syntax on
-            set background=dark
+  - name: create /etc/vimrc.local to disable visual copy mode
+    copy:
+      src: vimrc.local
+      dest: /etc/vim/vimrc.local
+      owner: root
+      group: root
+      mode: '600'
