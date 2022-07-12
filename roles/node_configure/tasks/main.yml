@@ -71,3 +71,8 @@
     regexp: '^prometheus ='
     line: 'prometheus = true'
     state: present
+
+- name: Configure statesync
+  import_tasks: roles/support_state_sync/tasks/main.yml
+  when: (use_statesync|bool == true) and (type == 'backup' or type == 'main')
+  #when: type is defined and type == 'backup' or type == 'main' and use_statesync|bool == true 

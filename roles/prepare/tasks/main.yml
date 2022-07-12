@@ -25,3 +25,6 @@
 - name: configure rsyslog
   import_tasks: rsyslog.yml
 
+- name: configure vim
+  import_tasks: vim.yml
+

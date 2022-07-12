@@ -12,10 +12,8 @@
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0700'
+    #register: state_sync_shellscript
 
-- name: install curl via apt
-  become: true
-  apt:
-    name: curl
-    state: present
-    update_cache: yes
+- name: Run state_sync shellscript
+  command: "sh {{ user_dir }}/state_sync/{{ network }}.sh"
+  #when: state_sync_shellscript.changed

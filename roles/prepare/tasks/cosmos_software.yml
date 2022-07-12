@@ -11,6 +11,7 @@
     - git
     - jq
     - chrony
+    - curl
 
 - name: Download go
   get_url:
