@@ -1,9 +1,10 @@
 #!/bin/bash
+set -ex
 
 # prune node
 sudo service {{ network }} stop
 sleep 5
-/home/ubuntu/go/bin/cosmprund prune ~/{{ folder }}/data --cosmos-sdk=false
+/home/{{ user_dir }}/go/bin/cosmos-pruner prune ~/{{ folder }}/data --cosmos-sdk=false
 sleep 5
 
 # Make sure the service is running
@@ -29,10 +30,10 @@ tar cvf - data | lz4 > "{{ user_dir }}/$FILENAME"
 sudo service {{ network }} start
 
 # Transfer the file and then remove the file
-cd {{ user_dir }}/
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $FILENAME "s3://snapshots/{{ network }}/" --profile={{ snapshot_profile }}
-rm $FILENAME
+#cd {{ user_dir }}/
+#aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $FILENAME "s3://snapshots/{{ network }}/" --profile={{ snapshot_profile }}
+#rm $FILENAME
 
 # Transfer the addrbook
-cd {{ user_dir }}/{{ folder }}/config
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp addrbook.json "s3://addrbook/{{ network }}/" --profile={{ snapshot_profile }}
+#cd {{ user_dir }}/{{ folder }}/config
+#aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp addrbook.json "s3://addrbook/{{ network }}/" --profile={{ snapshot_profile }}

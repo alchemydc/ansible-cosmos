@@ -7,25 +7,31 @@
       - jq
     state: present
     update_cache: yes
+  when: take_snapshots == true and snapshot_method == 'aws'
 
-- name: Install snapd
-  become: true
-  apt:
-    name: snapd
-    state: present
-    update_cache: yes
+# snaps do not work in unprivileged LXC containers afaict :(
+#- name: Install snapd
+#  become: true
+#  apt:
+#    name: snapd
+#    state: present
+#    update_cache: yes
 
 - name: Install lz4
   become: true
-  snap:
+  apt:
     name: lz4
     state: present
+    update_cache: yes
 
 - name: Create directory
   file:
     path: '{{ user_dir }}/snapshot'
     state: directory
     mode: '0755'
+
+- name: Clone and build cosmprund
+  import_tasks: roles/support_snapshot/tasks/cosmprund.yml
 
 - name: Copy snapshot script
   template:

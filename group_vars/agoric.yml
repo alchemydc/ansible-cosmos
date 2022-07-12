@@ -23,11 +23,21 @@ denom: bld
 denom_prefix: agoric
 
 # [Optional] Snapshot
-#snapshot_server: 2
-#snapshot_hour: 4
-#snapshot_minute: 30
+snapshot_server: 2
+snapshot_hour: 4
+snapshot_minute: 30
+#snapshot_method: 'aws'
+snapshot_method: 'gcloud'
+take_snapshots: true
+
 
 # [Optional] Statesync 
 use_statesync: true
 #use_statesync: false
 statesync_uri: 'http://10.10.69.226:44657'
+
+# [Optional] Expose node p2p publicly
+expose_public_ip: false
+
+cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
+

@@ -10,6 +10,7 @@
     regexp: 'external_address = "'
     line: 'external_address = "{{ public_ip.json.ip }}:{{ custom_port_prefix }}656"'
     state: present
+  when: expose_public_ip|bool == true
 
 - name: Adjust config.toml port
   lineinfile:
@@ -75,4 +76,7 @@
 - name: Configure statesync
   import_tasks: roles/support_state_sync/tasks/main.yml
   when: (use_statesync|bool == true) and (type == 'backup' or type == 'main')
-  #when: type is defined and type == 'backup' or type == 'main' and use_statesync|bool == true 
+
+- name: Configure snapshots
+  import_tasks: roles/support_snapshot/tasks/main.yml
+  when: (take_snapshots|bool == true) and (type == 'backup')
