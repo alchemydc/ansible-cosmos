@@ -77,4 +77,4 @@
     minute: '{{ snapshot_minute }}'
     hour: '{{ snapshot_hour }}'
     job: '/bin/bash {{ user_dir }}/snapshot/{{ network }}.sh'
-  when: take_snapshots|bool == 'true'
+  when: take_snapshots|bool == true
