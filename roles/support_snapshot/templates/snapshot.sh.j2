@@ -1,24 +1,23 @@
 #!/bin/bash
-set -ex
+set -euo pipefail
+IFS=$'\n\t'
+
+# Get block height
+echo "Getting block height from RPC"
+BLOCK_HEIGHT=$(curl -s http://localhost:{{ custom_port_prefix }}657/status | jq -r .result.sync_info.latest_block_height)
+echo "Block height: $BLOCK_HEIGHT"
 
 # prune node
-sudo service {{ network }} stop
+echo "Stopping {{ network }} daemon to prune the chain data"
+sudo systemctl stop {{ network }}
 sleep 5
+
 #{{ user_dir }}/go/bin/cosmos-pruner prune ~/{{ folder }}/data --cosmos-sdk=false
 {{ user_dir }}/go/bin/cosmos-pruner prune ~/{{ folder }}/data
 sleep 5
 
-# Make sure the service is running
-sudo service {{ network }} start
-sleep 30
-
-# Get block height
-BLOCK_HEIGHT=$(curl -s http://localhost:{{ custom_port_prefix }}657/status | jq -r .result.sync_info.latest_block_height)
-
-# Stop service
-sudo service {{ network }} stop
-
 # Compress the folder
+echo "Compressing chaindata..."
 FILENAME=$(echo {{ network }}_${BLOCK_HEIGHT}.tar.lz4)
 cd {{ user_dir }}/{{ folder }}
 {% if wasm is defined and wasm is sameas true %}
@@ -28,13 +27,18 @@ tar cvf - data | lz4 > "{{ user_dir }}/$FILENAME"
 {% endif %}
 
 # Restart the service
-sudo service {{ network }} start
+echo "Restarting {{ network }} daemon"
+sudo systemctl start {{ network }}
 
 # Transfer the file and then remove the file
-#cd {{ user_dir }}/
+echo "Copying the file to persistent storage"
+cd {{ user_dir }}/
 #aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $FILENAME "s3://snapshots/{{ network }}/" --profile={{ snapshot_profile }}
-#rm $FILENAME
+rclone copy $FILENAME remote:{{ snapshot_bucket }}
+rm -v $FILENAME
 
 # Transfer the addrbook
-#cd {{ user_dir }}/{{ folder }}/config
+echo "Uploading the addrbook.json to persistent storage"
+cd {{ user_dir }}/{{ folder }}/config
 #aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp addrbook.json "s3://addrbook/{{ network }}/" --profile={{ snapshot_profile }}
+rclone copy addrbook.json remote:{{ snapshot_bucket }}

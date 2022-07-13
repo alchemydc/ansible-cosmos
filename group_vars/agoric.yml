@@ -28,17 +28,24 @@ snapshot_server: 2
 snapshot_hour: 4
 snapshot_minute: 30
 #snapshot_method: 'aws'
-snapshot_method: 'gcloud'
+#snapshot_method: 'gcloud'
+snapshot_method: 'rclone'
+snapshot_storage: 'gcs'
 take_snapshots: true
+snapshot_bucket: '{{ vault_snapshot_bucket }}'
+gcloud_project_number: '{{ vault_gcloud_project_number }}'
 
+# sensitive data
+#gcp_token: "{{ vault_gcp_token }}"
 
 # [Optional] Statesync 
 use_statesync: true
-#use_statesync: false
 statesync_uri: 'http://10.10.69.226:44657'
 
-# [Optional] Expose node p2p publicly
+# [Optional] Expose node p2p publicly (note: only works on relayer role)
 expose_public_ip: false
 
+# repo for cosmos-pruner
+# required for backup role if take_snapshots == true
 cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
 

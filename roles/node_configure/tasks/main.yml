@@ -3,6 +3,7 @@
   uri:
     url: 'https://api.ipify.org?format=json'
   register: public_ip
+  when: expose_public_ip|bool == true
 
 - name: Set up external address
   lineinfile:
@@ -10,7 +11,7 @@
     regexp: 'external_address = "'
     line: 'external_address = "{{ public_ip.json.ip }}:{{ custom_port_prefix }}656"'
     state: present
-  when: expose_public_ip|bool == true
+  when: expose_public_ip|bool == true and type == 'relayer'
 
 - name: Adjust config.toml port
   lineinfile:

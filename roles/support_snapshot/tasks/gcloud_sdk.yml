@@ -1,0 +1,31 @@
+- name: Install dependencies
+  become: true
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+    update_cache: yes
+
+- name: add gcloud package signing GPG key
+  become: true
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: add gcloud repository to apt
+  become: true
+  apt_repository:
+    repo: deb https://packages.cloud.google.com/apt cloud-sdk main
+    state: present
+
+- name: Install gcloud sdk
+  become: true
+  apt:
+    name: google-cloud-sdk
+    state: present
+    update_cache: yes
+
+# #echo "gcloud auth activate-service-account ACCOUNT --key-file=KEYFILE"

@@ -2,3 +2,5 @@ inventory
 inventory_testnet
 test.sh
 roles/support_seed/templates/node_key.json.j2
+*.encrypted
+vault.yml

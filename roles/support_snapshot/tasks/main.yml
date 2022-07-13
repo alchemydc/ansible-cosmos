@@ -9,13 +9,42 @@
     update_cache: yes
   when: take_snapshots == true and snapshot_method == 'aws'
 
-# snaps do not work in unprivileged LXC containers afaict :(
-#- name: Install snapd
-#  become: true
-#  apt:
-#    name: snapd
-#    state: present
-#    update_cache: yes
+- name: Install gcloud sdk (cli)
+  import_tasks: roles/support_snapshot/tasks/gcloud_sdk.yml
+  when: snapshot_method == 'gcloud'
+
+- name: Install rclone
+  become: true
+  apt:
+    name:
+      - rclone
+    state: present
+    update_cache: yes
+  when: snapshot_method == 'rclone'
+
+- name: Deploy gcloud service account key
+  copy:
+    src: 'roles/support_snapshot/files/gcloud_svc_acct_key.json.encrypted'
+    dest: '{{ user_dir }}/.config/gcloud_svc_account_key.json'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0600'
+  when: snapshot_storage == "gcs"
+
+- name: Create rclone config directory
+  file:
+    path: '{{ user_dir }}/.config/rclone'
+    state: directory
+    mode: '0750'
+
+- name: Deploy rclone config file
+  template:
+    src: 'roles/support_snapshot/templates/rclone.conf.j2'
+    dest: '{{ user_dir }}/.config/rclone/rclone.conf'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0600'
+  when: snapshot_method == "rclone"
 
 - name: Install lz4
   become: true
@@ -48,3 +77,4 @@
     minute: '{{ snapshot_minute }}'
     hour: '{{ snapshot_hour }}'
     job: '/bin/bash {{ user_dir }}/snapshot/{{ network }}.sh'
+  when: take_snapshots|bool == 'true'
