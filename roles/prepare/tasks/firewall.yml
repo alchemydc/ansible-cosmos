@@ -17,14 +17,19 @@
     - node_exporter|bool == true
 
 - name: open prometheus port
-  command: ufw allow 26660/tcp
+  command: ufw allow {{custom_port_prefix}}660/tcp
   when:
-    - not ufw_status_result.stdout is search("26660/tcp.*ALLOW IN.*Anywhere")
+    - not ufw_status_result.stdout is search("{{custom_port_prefix}}660/tcp.*ALLOW IN.*Anywhere")
 
 - name: open p2p port
-  command: ufw allow 26656/tcp
+  command: ufw allow {{custom_port_prefix}}656/tcp
   when:
-    - not ufw_status_result.stdout is search("26656/tcp.*ALLOW IN.*Anywhere")
+    - not ufw_status_result.stdout is search("{{custom_port_prefix}}656/tcp.*ALLOW IN.*Anywhere")
+
+- name: open rpc port (for relayer type only)
+  command: ufw allow {{custom_port_prefix}}657/tcp
+  when:
+    - not ufw_status_result.stdout is search("{{custom_port_prefix}}657/tcp.*ALLOW IN.*Anywhere") and type == 'relayer'
 
 - name: open ssh port
   command: ufw allow {{ ssh_port }}/tcp
