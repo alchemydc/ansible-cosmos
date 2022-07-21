@@ -88,4 +88,4 @@
 
 - name: Configure snapshots
   import_tasks: roles/support_snapshot/tasks/main.yml
-  when: (take_snapshots|bool == true) and (type == 'backup')
+  when: (take_snapshots|bool == true) and (type == 'backup') or (restore_snapshots|bool == true)

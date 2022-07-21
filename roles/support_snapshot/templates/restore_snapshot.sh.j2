@@ -1,44 +1,30 @@
 #!/bin/bash
-set -euo pipefail
+set -euox pipefail
 IFS=$'\n\t'
+DATE=$(date +"%Y-%m-%d-%T")
 
-# Get block height
-echo "Getting block height from RPC"
-BLOCK_HEIGHT=$(curl -s http://localhost:{{ custom_port_prefix }}657/status | jq -r .result.sync_info.latest_block_height)
-echo "Block height: $BLOCK_HEIGHT"
-
-# prune node
-echo "Stopping {{ network }} daemon to prune the chain data"
+# stop service before unarchiving 
+echo "Stopping {{ network }} daemon to pull the chain data from remote snapshot archive"
 sudo systemctl stop {{ network }}
 sleep 5
 
-#{{ user_dir }}/go/bin/cosmos-pruner prune ~/{{ folder }}/data --cosmos-sdk=false
-{{ user_dir }}/go/bin/cosmos-pruner prune ~/{{ folder }}/data
-sleep 5
+# backup existing addrbook.json
+echo "Backing up addrbook.json"
+cp {{ user_dir }}/{{ folder }}/config/addrbook.json {{ user_dir }}/{{ folder }}/config/addrbook.json.$DATE
+# pulling addrbook.json from snapshot bucket
+rclone copy remote:{{ snapshot_bucket }}/addrbook.json {{ user_dir }}/{{ folder }}/config/
 
-# Compress the folder
-echo "Compressing chaindata..."
-FILENAME=$(echo {{ network }}_${BLOCK_HEIGHT}.tar.lz4)
-cd {{ user_dir }}/{{ folder }}
-{% if wasm is defined and wasm is sameas true %}
-tar cvf - data wasm | lz4 > "{{ user_dir }}/$FILENAME"
-{% else %}
-tar cvf - data | lz4 > "{{ user_dir }}/$FILENAME"
-{% endif %}
+# find the latest snapshot in the bucket
+echo "Finding the latest snapshot in the bucket"
+#SNAPSHOTS=$(rclone lsf remote:{{ snapshot_bucket }})
+#LATEST_SNAPSHOT=$(echo $SNAPSHOTS | tail -n 1)
+LATEST_SNAPSHOT=$(rclone lsf remote:{{ snapshot_bucket }} | tail -n 1)
+
+# download latest snapshot
+echo "downloading and extracting the latest snapshot"
+rclone cat remote:{{ snapshot_bucket }}/$LATEST_SNAPSHOT \
+| lz4 -c -d - | tar -x -C {{ user_dir }}/{{ folder }}
 
 # Restart the service
 echo "Restarting {{ network }} daemon"
 sudo systemctl start {{ network }}
-
-# Transfer the file and then remove the file
-echo "Copying the file to persistent storage"
-cd {{ user_dir }}/
-#aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $FILENAME "s3://snapshots/{{ network }}/" --profile={{ snapshot_profile }}
-rclone copy $FILENAME remote:{{ snapshot_bucket }}
-rm -v $FILENAME
-
-# Transfer the addrbook
-echo "Uploading the addrbook.json to persistent storage"
-cd {{ user_dir }}/{{ folder }}/config
-#aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp addrbook.json "s3://addrbook/{{ network }}/" --profile={{ snapshot_profile }}
-rclone copy addrbook.json remote:{{ snapshot_bucket }}

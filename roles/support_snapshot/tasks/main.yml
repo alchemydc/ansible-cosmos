@@ -7,7 +7,7 @@
       - jq
     state: present
     update_cache: yes
-  when: take_snapshots == true and snapshot_method == 'aws'
+  when: snapshot_method == 'aws'
 
 - name: Install gcloud sdk (cli)
   import_tasks: roles/support_snapshot/tasks/gcloud_sdk.yml
@@ -36,6 +36,7 @@
     path: '{{ user_dir }}/.config/rclone'
     state: directory
     mode: '0750'
+  when: snapshot_method == 'rclone'
 
 - name: Deploy rclone config file
   template:
@@ -61,11 +62,12 @@
 
 - name: Clone and build cosmprund
   import_tasks: roles/support_snapshot/tasks/cosmprund.yml
+  when: take_snapshots|bool == true
 
 - name: Copy snapshot script
   template:
     src: 'snapshot.sh.j2'
-    dest: '{{ user_dir }}/snapshot/{{ network }}.sh'
+    dest: '{{ user_dir }}/snapshot/take_snapshot_{{ network }}.sh'
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0700'
@@ -76,13 +78,13 @@
     name: '{{ network }} snapshot'
     minute: '{{ snapshot_minute }}'
     hour: '{{ snapshot_hour }}'
-    job: '/bin/bash {{ user_dir }}/snapshot/{{ network }}.sh'
-  when: take_snapshots|bool == true
+    job: '/bin/bash {{ user_dir }}/snapshot/take_snapshot_{{ network }}.sh'
+  when: (take_snapshots|bool == true and type == 'backup')
 
 - name: Copy restore from snapshot script
   template:
     src: 'restore_snapshot.sh.j2'
-    dest: '{{ user_dir }}/snapshot/{{ network }}_restore.sh'
+    dest: '{{ user_dir }}/snapshot/restore_snapshot_{{ network }}.sh'
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0700'
