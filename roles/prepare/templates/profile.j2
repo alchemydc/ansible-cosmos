@@ -21,7 +21,7 @@ export GOPATH=$HOME/go
 export GO111MODULE=on
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
-alias status='ag0 status -n tcp://localhost:{{ custom_port_prefix }}657 | jq .'
-alias wstatus='watch -n 1 "ag0 status -n tcp://localhost:{{ custom_port_prefix }}657 | jq ."'
+alias status='{{ daemon }} status -n tcp://localhost:{{ custom_port_prefix }}657 | jq .'
+alias wstatus='watch -n 1 "{{ daemon }} status -n tcp://localhost:{{ custom_port_prefix }}657 | jq ."'
 alias peers='curl -s http://localhost:{{ custom_port_prefix }}657/net_info | jq .result.n_peers'
 alias wpeers='watch -n 1 "curl -s http://localhost:{{ custom_port_prefix }}657/net_info | jq .result.n_peers"'

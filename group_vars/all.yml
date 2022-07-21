@@ -14,3 +14,15 @@ cosmovisor_version: 'v1.0.0'
 
 # ssh_port
 ssh_port: 22
+
+# Expose node p2p publicly (note: only works on relayer role)
+expose_public_ip: false
+
+# must specify statesync uri at network level if this is enabled
+use_statesync: false
+
+# repo for cosmos-pruner
+# required for backup role if take_snapshots == true
+cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
+
+take_snapshots: false

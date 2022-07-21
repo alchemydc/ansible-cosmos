@@ -44,6 +44,7 @@
     regexp: '^persistent_peers ='
     line: 'persistent_peers = "{{ peers }}"'
     state: present
+    firstmatch: true
   when: peers is defined
 
 - name: Update seeds in config.toml file
@@ -51,6 +52,14 @@
     path: '{{ user_dir }}/{{ folder }}/config/config.toml'
     regexp: '^seeds ='
     line: 'seeds = "{{ seeds }}"'
+    state: present
+  when: seeds is defined
+
+- name: Update bootstrappeers in config.toml file
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '^bootstrap-peers ='
+    line: 'bootstrap-peers = "{{ seeds }}"'
     state: present
   when: seeds is defined
 

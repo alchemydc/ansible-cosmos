@@ -78,3 +78,12 @@
     hour: '{{ snapshot_hour }}'
     job: '/bin/bash {{ user_dir }}/snapshot/{{ network }}.sh'
   when: take_snapshots|bool == true
+
+- name: Copy restore from snapshot script
+  template:
+    src: 'restore_snapshot.sh.j2'
+    dest: '{{ user_dir }}/snapshot/{{ network }}_restore.sh'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0700'
+  when: restore_snapshots|bool == true
