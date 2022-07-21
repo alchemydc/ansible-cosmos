@@ -15,8 +15,8 @@ genesis: 'https://main.agoric.net/genesis.json'
 #seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:44656' # polkachu seed node
 #seeds: '1fa3d2cd934b658e05f12a003eb5523f476173ec@65.108.131.174:44656' # polkachu state-sync
 #seeds: ''
-seeds: 'ccc57d7588068e0c468110e0c3a00d60a126d629@10.10.69.226:44656'  # zd-agoric-relayer
-peers: 'ccc57d7588068e0c468110e0c3a00d60a126d629@10.10.69.226:44656'  # zd-agoric-relayer
+seeds: 'ecb5a8127b6d6ce8ee2ee40678a3bb69af04d8e4@10.10.69.226:44656,524f657dbca01fdebbebcb3f85873608237ce967@10.10.69.229:44656'  # zd-agoric-relayer-0, # zd-agoric-relayer-1
+peers: 'ecb5a8127b6d6ce8ee2ee40678a3bb69af04d8e4@10.10.69.226:44656,524f657dbca01fdebbebcb3f85873608237ce967@10.10.69.229:44656'  # zd-agoric-relayer
 custom_port_prefix: 44
 
 # [Optional] Cosmos exporter
@@ -41,7 +41,7 @@ gcloud_project_number: '{{ vault_gcloud_project_number }}'
 
 # [Optional] Statesync 
 use_statesync: true
-statesync_uri: 'http://10.10.69.226:44657'
+statesync_uri: 'https://agoric-rpc.zanshindojo.org:443'
 
 # [Optional] Expose node p2p publicly (note: only works on relayer role)
 expose_public_ip: false
@@ -50,3 +50,5 @@ expose_public_ip: false
 # required for backup role if take_snapshots == true
 cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
 
+# do not run peer discovery except on relayers
+pex: false
