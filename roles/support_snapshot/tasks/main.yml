@@ -22,6 +22,13 @@
     update_cache: yes
   when: snapshot_method == 'rclone'
 
+- name: Ensure that the user's .config folder exists
+  file:
+    path: '{{ user_dir }}/.config'
+    state: directory
+    mode: '0750'
+  when: snapshot_storage == "gcs"
+
 - name: Deploy gcloud service account key
   copy:
     src: 'roles/support_snapshot/files/gcloud_svc_acct_key.json.encrypted'
@@ -62,7 +69,7 @@
 
 - name: Clone and build cosmprund
   import_tasks: roles/support_snapshot/tasks/cosmprund.yml
-  when: take_snapshots|bool == true
+  when: take_snapshots|bool == true and type == 'backup'
 
 - name: Copy snapshot script
   template:

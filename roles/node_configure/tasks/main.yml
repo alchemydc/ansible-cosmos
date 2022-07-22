@@ -11,7 +11,7 @@
     regexp: 'external_address = "'
     line: 'external_address = "{{ public_ip.json.ip }}:{{ custom_port_prefix }}656"'
     state: present
-  when: expose_public_ip|bool == true and type == 'relayer'
+  when: expose_public_ip|bool == true
 
 - name: Adjust config.toml port
   lineinfile:
@@ -80,7 +80,7 @@
     regexp: '^pex ='
     line: 'pex = false'
     state: present
-  when: (type == 'backup' or type == 'main')
+  when: (type == 'backup' or type == 'main') and use_pex|bool == false
 
 - name: Configure statesync
   import_tasks: roles/support_state_sync/tasks/main.yml
