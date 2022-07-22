@@ -51,4 +51,4 @@ expose_public_ip: false
 cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
 
 # do not run peer discovery except on relayers
-pex: false
+#pex: false

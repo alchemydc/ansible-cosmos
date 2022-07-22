@@ -80,7 +80,7 @@
     regexp: '^pex ='
     line: 'pex = false'
     state: present
-  when: (type == 'backup' or type == 'main') and (pex|bool == false)
+  when: (type == 'backup' or type == 'main')
 
 - name: Configure statesync
   import_tasks: roles/support_state_sync/tasks/main.yml
