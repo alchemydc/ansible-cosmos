@@ -80,3 +80,7 @@
 - name: targz genesis download
   include_tasks: genesis_targz.yml
   when: genesis_processing is defined and genesis_processing == "targz"
+
+- name: jq genesis download
+  include_tasks: genesis_jq.yml
+  when: genesis_processing is defined and genesis_processing == "jq"

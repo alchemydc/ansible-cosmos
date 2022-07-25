@@ -1,0 +1,8 @@
+- name: Download genesis file
+  get_url:
+    url: '{{ genesis }}'
+    dest: '/tmp/genesis.json'
+    mode: '0700'
+
+- name: extract result from genesis file
+  shell: 'cat /tmp/genesis.json | jq .result.genesis > "{{ user_dir }}/{{ folder }}/config/genesis.json"'

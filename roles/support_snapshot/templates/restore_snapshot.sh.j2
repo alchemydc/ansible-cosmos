@@ -9,9 +9,13 @@ sudo systemctl stop {{ network }}
 sleep 5
 
 # backup existing addrbook.json
-echo "Backing up addrbook.json"
+echo "Backing up addrbook.json" 
+if [ -f {{ user_dir }}/{{ folder }}/config/addrbook.json ]; then
 cp {{ user_dir }}/{{ folder }}/config/addrbook.json {{ user_dir }}/{{ folder }}/config/addrbook.json.$DATE
+fi
+
 # pulling addrbook.json from snapshot bucket
+echo "pulling addrbook.json from snapshot bucket"
 rclone copy remote:{{ snapshot_bucket }}/addrbook.json {{ user_dir }}/{{ folder }}/config/
 
 # find the latest snapshot in the bucket
