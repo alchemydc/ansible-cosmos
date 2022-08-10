@@ -1,0 +1,25 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+echo "Cleaning up snapshot server by stopping the daemon, removing chain data, and then restoring via state sync"
+
+# stop daemon
+echo "Stopping {{ network }} daemon to wipe the chain data"
+sudo systemctl stop {{ network }}
+sleep 5
+
+echo "Removing chain data with unsafe-reset-all"
+{{ daemon }} unsafe-reset-all
+
+echo "Refreshing state-sync checkpoint"
+cd {{ user_dir }}/state_sync
+./{{ network }}.sh
+
+# Restart the service
+echo "Restarting {{ daemon }} to restore from state-sync"
+echo "Restarting {{ network }} daemon"
+sudo systemctl start {{ network }}
+
+
+

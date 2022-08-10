@@ -61,7 +61,7 @@
     state: present
     update_cache: yes
 
-- name: Create directory
+- name: Create snapshot directory
   file:
     path: '{{ user_dir }}/snapshot'
     state: directory
@@ -96,3 +96,21 @@
     group: '{{ ansible_user }}'
     mode: '0700'
   when: restore_snapshots|bool == true
+
+- name: Create cleanup directory
+  file:
+    path: '{{ user_dir }}/cleanup'
+    state: directory
+    mode: '0755'
+  tags: 'cleanup_snapshot'
+
+- name: Copy cleanup snapshot server script
+  template:
+    #src: 'cleanup_snapshot_server.sh.j2'
+    src: 'roles/support_snapshot/templates/cleanup_snapshot_server.sh.j2' # need to provide full path when running single task via tag apparently
+    dest: '{{ user_dir }}/cleanup/cleanup_{{ network }}_snapshot_server.sh'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0700'
+  when: type == 'backup'
+  tags: 'cleanup_snapshot'

@@ -53,4 +53,5 @@ cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
 # do not run peer discovery except on relayers
 #pex: false
 
-binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-5/ag0-agoric-upgrade-5-linux-amd64"
+#binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-5/ag0-agoric-upgrade-5-linux-amd64"
+binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-6/ag0-agoric-upgrade-6-linux-amd64"
