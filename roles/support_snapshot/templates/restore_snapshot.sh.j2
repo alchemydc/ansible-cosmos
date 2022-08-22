@@ -3,6 +3,9 @@ set -euox pipefail
 IFS=$'\n\t'
 DATE=$(date +"%Y-%m-%d-%T")
 
+echo "Sourcing profile to pull go bin path in"
+. ~/.profile
+
 # stop service before unarchiving 
 echo "Stopping {{ network }} daemon to pull the chain data from remote snapshot archive"
 sudo systemctl stop {{ network }}

@@ -5,3 +5,4 @@ roles/support_seed/templates/node_key.json.j2
 *.encrypted
 vault.yml
 private/
+ansible.cfg

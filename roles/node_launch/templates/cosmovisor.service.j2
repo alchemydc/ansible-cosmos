@@ -1,6 +1,8 @@
 [Unit]
 Description=cosmovisor
 After=network-online.target
+StartLimitBurst=3
+StartLimitIntervalSec=30
 
 [Service]
 User={{ ansible_user }}

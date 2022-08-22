@@ -17,3 +17,5 @@
 - name: Run state_sync shellscript
   command: "sh {{ user_dir }}/state_sync/{{ network }}.sh"
   #when: state_sync_shellscript.changed
+
+
