@@ -84,7 +84,8 @@
 
 - name: Configure statesync
   import_tasks: roles/support_state_sync/tasks/main.yml
-  when: (use_statesync|bool == true) and (type == 'backup' or type == 'main')
+  #when: (use_statesync|bool == true) and (type == 'backup' or type == 'main')
+  when: (use_statesync|bool == true)
 
 - name: Configure snapshots
   import_tasks: roles/support_snapshot/tasks/main.yml

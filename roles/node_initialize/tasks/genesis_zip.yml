@@ -2,12 +2,14 @@
   apt:
     name: unzip
     state: latest
+  become: true
 
 - name: download genesis zip file
   get_url:
     url: '{{ genesis }}'
     dest: '/tmp/genesis.zip'
     mode: '0700'
+    checksum: "{{ genesis_hash }}"
 
 - name: unarchive genesis
   unarchive:

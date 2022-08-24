@@ -17,6 +17,9 @@ if [ -f {{ user_dir }}/{{ folder }}/config/addrbook.json ]; then
 cp {{ user_dir }}/{{ folder }}/config/addrbook.json {{ user_dir }}/{{ folder }}/config/addrbook.json.$DATE
 fi
 
+echo "Removing chain data with unsafe-reset-all"
+{{ daemon }} tendermint unsafe-reset-all
+
 # pulling addrbook.json from snapshot bucket
 echo "pulling addrbook.json from snapshot bucket"
 rclone copy remote:{{ snapshot_bucket }}/addrbook.json {{ user_dir }}/{{ folder }}/config/
