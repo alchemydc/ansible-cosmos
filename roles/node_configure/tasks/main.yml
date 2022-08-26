@@ -13,12 +13,20 @@
     state: present
   when: expose_public_ip|bool == true
 
-- name: Adjust config.toml port
+- name: Adjust config.toml ports
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/config.toml'
     regexp: '{{ item.key }}'
     line: '{{ item.value }}'
   loop: '{{ config_port_changes | dict2items }}'
+
+- name: Adjust config.toml peer limits
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }}'
+  loop: '{{ peer_limit_changes | dict2items }}'
+  tags: 'peer_limits'
 
 - name: Adjust app.toml ports
   lineinfile:
@@ -85,8 +93,8 @@
 - name: Configure statesync
   import_tasks: roles/support_state_sync/tasks/main.yml
   #when: (use_statesync|bool == true) and (type == 'backup' or type == 'main')
-  when: (use_statesync|bool == true)
+  when: use_statesync|bool == true
 
 - name: Configure snapshots
   import_tasks: roles/support_snapshot/tasks/main.yml
-  when: (take_snapshots|bool == true) and (type == 'backup') or (restore_snapshots|bool == true)
+  #when: (take_snapshots|bool == true) and (type == 'backup') or (restore_snapshots|bool == true)

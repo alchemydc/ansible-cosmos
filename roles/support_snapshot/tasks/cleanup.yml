@@ -1,0 +1,33 @@
+- name: Create cleanup directory
+  file:
+    path: '{{ user_dir }}/cleanup'
+    state: directory
+    mode: '0755'
+
+- name: Copy cleanup restore via statesync script
+  template:
+    #src: 'cleanup_restore_via_statesync.sh.j2'
+    src: 'roles/support_snapshot/templates/cleanup_restore_via_statesync.sh.j2' # need to provide full path when running single task via tag apparently
+    dest: '{{ user_dir }}/cleanup/cleanup_{{ network }}_restore_via_statesync.sh'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0700'
+
+- name: Copy cleanup restore via snapshot script
+  template:
+    #src: 'cleanup_restore_via_snapshot.sh.j2'
+    src: 'roles/support_snapshot/templates/cleanup_restore_via_snapshot.sh.j2' # need to provide full path when running single task via tag apparently
+    dest: '{{ user_dir }}/cleanup/cleanup_{{ network }}_restore_via_snapshot.sh'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0700'
+
+- name: Create cleanup and restore via state_sync cronjob    # careful with this, as this will stop the daemon to take the snapshot. do NOT run this on validators!
+  cron:
+    user: '{{ ansible_user }}'
+    name: '{{ network }} cleanup_restore_via_statesync'
+    weekday: '{{ cleanup_weekday }}'
+    minute: '{{ cleanup_minute }}'
+    hour: '{{ cleanup_hour }}'
+    job: '/bin/bash {{ user_dir }}/cleanup/cleanup_{{ network }}_restore_via_statesync.sh'
+  when: (cleanup|bool == true and restore_type == 'statesync')

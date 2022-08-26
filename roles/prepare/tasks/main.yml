@@ -10,6 +10,7 @@
 - name: install node_exporter
   import_tasks: node_exporter.yml
   when: node_exporter|bool == true
+  tags: node_exporter
 
 - name: install promtail
   import_tasks: promtail.yml
@@ -17,6 +18,7 @@
 
 - name: firewall setup
   import_tasks: firewall.yml
+  tags: firewall
 
 - name: install cosmos software
   import_tasks: cosmos_software.yml

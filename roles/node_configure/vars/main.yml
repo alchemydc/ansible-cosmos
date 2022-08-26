@@ -29,3 +29,6 @@ pruning_test:
   'pruning-interval = "': 'pruning-interval = "17"'
   'snapshot-interval = ': 'snapshot-interval = 2000'
   'snapshot-keep-recent = ': 'snapshot-keep-recent= 2'
+peer_limit_changes:
+  'max_num_inbound_peers =': 'max_num_inbound_peers = {{ max_num_inbound_peers }}'
+  'max_num_outbound_peers =': 'max_num_outbound_peers = {{ max_num_outbound_peers }}'

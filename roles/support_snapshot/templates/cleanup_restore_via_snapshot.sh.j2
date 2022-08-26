@@ -1,11 +1,11 @@
 #!/bin/bash
-set -euox pipefail
+set -euo pipefail
 IFS=$'\n\t'
 
 echo "Sourcing profile to pull go bin path in"
 . ~/.profile
 
-echo "Cleaning up snapshot server by stopping the daemon, removing chain data, and then restoring via state sync"
+echo "Cleaning up {{ network }} server by stopping the daemon, removing chain data, and then restoring from snapshot."
 
 # stop daemon
 echo "Stopping {{ network }} daemon to wipe the chain data"
@@ -13,16 +13,12 @@ sudo systemctl stop {{ network }}
 sleep 5
 
 echo "Removing chain data with unsafe-reset-all"
-{{ daemon }} tendermint unsafe-reset-all
+{{ daemon }} tendermint unsafe-reset-all --home {{ user_dir }}/.{{ folder }} --keep-addr-book
 
-echo "Refreshing state-sync checkpoint"
-cd {{ user_dir }}/state_sync
-./{{ network }}.sh
+echo "Restoring from snapshot"
+{{ user_dir }}/snapshot/restore_snapshot_{{ network }}.sh
 
 # Restart the service
-echo "Restarting {{ daemon }} to restore from state-sync"
 echo "Restarting {{ network }} daemon"
 sudo systemctl start {{ network }}
-
-
 
