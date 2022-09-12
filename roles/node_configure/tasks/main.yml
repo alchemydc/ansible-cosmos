@@ -28,6 +28,14 @@
   loop: '{{ peer_limit_changes | dict2items }}'
   tags: 'peer_limits'
 
+- name: Adjust config.toml log level
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }}'
+  loop: '{{ log_level_changes | dict2items }}'
+  tags: 'log_level'
+
 - name: Adjust app.toml ports
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'

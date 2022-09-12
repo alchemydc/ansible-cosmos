@@ -85,7 +85,8 @@
     name: '{{ network }} snapshot'
     minute: '{{ snapshot_minute }}'
     hour: '{{ snapshot_hour }}'
-    job: '/bin/bash {{ user_dir }}/snapshot/take_snapshot_{{ network }}.sh'
+    #job: '/bin/bash {{ user_dir }}/snapshot/take_snapshot_{{ network }}.sh'
+    job: '/bin/bash {{ user_dir }}/snapshot/take_snapshot_{{ network }}.sh | logger'
   when: (take_snapshots|bool == true and type == 'backup')
 
 - name: Copy restore from snapshot script

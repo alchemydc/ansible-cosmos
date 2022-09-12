@@ -18,7 +18,7 @@ cp {{ user_dir }}/{{ folder }}/config/addrbook.json {{ user_dir }}/{{ folder }}/
 fi
 
 echo "Removing chain data with unsafe-reset-all"
-{{ daemon }} tendermint unsafe-reset-all
+{{ daemon }} tendermint unsafe-reset-all --home {{ user_dir }}/{{ folder }} --keep-addr-book
 
 # pulling addrbook.json from snapshot bucket
 echo "pulling addrbook.json from snapshot bucket"

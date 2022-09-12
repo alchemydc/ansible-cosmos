@@ -13,8 +13,7 @@ sudo systemctl stop {{ network }}
 sleep 5
 
 echo "Removing chain data with unsafe-reset-all"
-#{{ daemon }} tendermint unsafe-reset-all --home {{ user_dir }}/{{ folder }} --keep-addr-book
-{{ daemon }} tendermint unsafe-reset-all --home {{ user_dir }}/{{ folder }} #--keep-addr-book
+{{ daemon }} tendermint unsafe-reset-all --home {{ user_dir }}/{{ folder }} --keep-addr-book
 
 echo "Refreshing state-sync checkpoint"
 cd {{ user_dir }}/state_sync
