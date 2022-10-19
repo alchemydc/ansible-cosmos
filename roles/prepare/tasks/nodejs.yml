@@ -1,0 +1,28 @@
+- name: Install dependencies
+  apt:
+    name: 
+     - gnupg 
+    state: present
+    update_cache: true
+
+- name: get distro
+  command: "lsb_release -s -c"
+  register: distro
+
+- name: add NodeSource GPG key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
+
+- name: Add NodeSource repo
+  apt_repository: 
+    repo: deb https://deb.nodesource.com/{{ nodejs_version }} {{ distro.stdout }} main
+    state: present
+
+- name: Install nodejs and yarn
+  apt:
+    name: 
+     - nodejs
+     - yarn
+    state: present
+    update_cache: true

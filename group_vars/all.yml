@@ -26,3 +26,6 @@ use_statesync: false
 cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
 
 take_snapshots: false
+
+install_nodejs: false
+nodejs_version: "node_16.x"
