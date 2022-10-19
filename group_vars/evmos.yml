@@ -5,7 +5,8 @@ chain_id: evmos_9001-2
 #node_version: v4.0.1
 #node_version: v8.0.0
 #node_version: v3.0.3
-node_version: v7.0.0
+#node_version: v7.0.0
+node_version: v8.2.0
 #repo: https://github.com/tharsis/evmos
 repo: https://github.com/evmos/evmos
 #genesis: 'https://github.com/tharsis/mainnet/blob/main/evmos_9001-2/genesis.json.zip?raw=true'
