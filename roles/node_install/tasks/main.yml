@@ -15,10 +15,11 @@
       args:
         chdir: '{{ user_dir }}/{{ network }}'
       with_items:
-        - 'yarn install && yarn build'
+        - 'yarn install'
+        - 'yarn build'
       environment:
         PATH: '{{ path }}'
-      when: install_nodejs|bool = true
+      when: install_nodejs|bool == true
 
     - name: Build and Install golang binary
       command: '{{ item }}'
@@ -29,7 +30,7 @@
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
-      when: install_nodejs|bool = true
+      when: install_nodejs|bool == true
 
     - name: Install node
       command: '{{ item }}'
@@ -40,7 +41,7 @@
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
-      when: install_nodejs|bool = false
+      when: install_nodejs|bool == false
   when: binary is undefined
 
 - name: Install from binary

@@ -19,6 +19,16 @@
     repo: deb https://deb.nodesource.com/{{ nodejs_version }} {{ distro.stdout }} main
     state: present
 
+- name: add yarn GPG key
+  apt_key:
+    url: https://dl.yarnpkg.com/debian/pubkey.gpg
+    state: present
+
+- name: Add yarn repo
+  apt_repository: 
+    repo: deb https://dl.yarnpkg.com/debian stable main
+    state: present
+
 - name: Install nodejs and yarn
   apt:
     name: 
