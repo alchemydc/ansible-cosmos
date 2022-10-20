@@ -15,6 +15,9 @@ Environment="DAEMON_HOME={{ user_dir }}/{{ folder }}"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
 Environment="UNSAFE_SKIP_BACKUP=true"
+{% if install_nodejs == true }
+Environment="PATH=/usr/bin:{{ user_dir }}/go/bin:{{ user_dir }}/{{ network }}/packages/cosmic-swingset/bin"
+{% endif %}
 
 [Install]
 WantedBy=multi-user.target

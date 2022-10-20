@@ -10,6 +10,27 @@
         force: yes
         depth: 1
 
+    - name: Build and Install javascript sdk
+      command: '{{ item }}'
+      args:
+        chdir: '{{ user_dir }}/{{ network }}'
+      with_items:
+        - 'yarn install && yarn build'
+      environment:
+        PATH: '{{ path }}'
+      when: install_nodejs|bool = true
+
+    - name: Build and Install golang binary
+      command: '{{ item }}'
+      args:
+        chdir: '{{ user_dir }}/{{ network }}/packages/cosmic-swingset'
+      with_items:
+        - 'make'
+      environment:
+        PATH: '{{ path }}'
+        GOPATH: '{{ user_dir }}/go'
+      when: install_nodejs|bool = true
+
     - name: Install node
       command: '{{ item }}'
       args:
@@ -19,6 +40,7 @@
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
+      when: install_nodejs|bool = false
   when: binary is undefined
 
 - name: Install from binary
