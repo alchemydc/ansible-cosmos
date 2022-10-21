@@ -25,16 +25,16 @@ snapshot_minute: 30
 #snapshot_method: 'gcloud'
 snapshot_method: 'rclone'
 snapshot_storage: 'gcs'
-take_snapshots: false
-restore_snapshots: false
-snapshot_bucket: '{{ vault_snapshot_bucket }}'
-gcloud_project_number: '{{ vault_gcloud_project_number }}'
+take_snapshots: true
+restore_snapshots: true
+snapshot_bucket: '{{ vault_emerynet_snapshot_bucket }}'
+gcloud_project_number: '{{ vault_emerynet_gcloud_project_number }}'
 
 # sensitive data
 #gcp_token: "{{ vault_gcp_token }}"
 
 # [Optional] Statesync 
-use_statesync: true
+use_statesync: false
 statesync_uri: 'https://agoric-testnet-rpc.polkachu.com:443'
 
 

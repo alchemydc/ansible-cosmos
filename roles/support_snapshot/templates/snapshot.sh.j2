@@ -30,7 +30,7 @@ tar cvf - data | lz4 > "{{ user_dir }}/$FILENAME"
 echo "Uploading the addrbook.json to persistent storage"
 #cd {{ user_dir }}/{{ folder }}/config
 #aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp addrbook.json "s3://addrbook/{{ network }}/" --profile={{ snapshot_profile }}
-rclone copy {{ user_dir }}/{{ folder }}/config/addrbook.json remote:{{ snapshot_bucket }}
+rclone copy --gcs-bucket-policy-only {{ user_dir }}/{{ folder }}/config/addrbook.json remote:{{ snapshot_bucket }}
 
 # Restart the service
 echo "Restarting {{ network }} daemon"
@@ -40,7 +40,7 @@ sudo systemctl start {{ network }}
 echo "Copying the file to persistent storage"
 cd {{ user_dir }}/
 #aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $FILENAME "s3://snapshots/{{ network }}/" --profile={{ snapshot_profile }}
-rclone copy $FILENAME remote:{{ snapshot_bucket }}
+rclone copy --gcs-bucket-policy-only $FILENAME remote:{{ snapshot_bucket }}
 rm -v $FILENAME
 
 

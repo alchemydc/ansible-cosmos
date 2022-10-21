@@ -31,7 +31,7 @@
 
 - name: Deploy gcloud service account key
   copy:
-    src: 'roles/support_snapshot/files/gcloud_svc_acct_key.json.encrypted'
+    src: 'roles/support_snapshot/files/{{ network }}_gcloud_svc_acct_key.json.encrypted'
     dest: '{{ user_dir }}/.config/gcloud_svc_account_key.json'
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
@@ -70,6 +70,7 @@
 - name: Clone and build cosmprund
   import_tasks: roles/support_snapshot/tasks/cosmprund.yml
   when: take_snapshots|bool == true and type == 'backup'
+  #when: take_snapshots|bool == true or type == 'backup'
 
 - name: Copy take snapshot script
   template:
