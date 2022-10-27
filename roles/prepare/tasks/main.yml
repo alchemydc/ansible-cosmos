@@ -33,4 +33,4 @@
 - name: install nodejs
   import_tasks: nodejs.yml
   when: install_nodejs is defined and install_nodejs|bool == true
-  tags: nodejs
+  tags: install_nodejs

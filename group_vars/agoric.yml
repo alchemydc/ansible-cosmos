@@ -1,9 +1,12 @@
 network: agoric
 folder: '.agoric'
-daemon: ag0
+#daemon: ag0
+daemon: agd
 chain_id: 'agoric-3'
-node_version: 'agoric-upgrade-7-1'
-repo: 'https://github.com/Agoric/ag0'
+#node_version: 'agoric-upgrade-7-2'
+node_version: 'pismoA-rc4'
+#repo: 'https://github.com/Agoric/ag0'
+repo: 'https://github.com/Agoric/agoric-sdk'
 genesis: 'https://main.agoric.net/genesis.json'
 seeds: 'ecb5a8127b6d6ce8ee2ee40678a3bb69af04d8e4@10.10.50.110:44656,524f657dbca01fdebbebcb3f85873608237ce967@10.10.50.111:44656'  # zd-agoric-relayer-0, # zd-agoric-relayer-1
 peers: 'ecb5a8127b6d6ce8ee2ee40678a3bb69af04d8e4@10.10.50.110:44656,524f657dbca01fdebbebcb3f85873608237ce967@10.10.50.111:44656'  # zd-agoric-relayer-0, # zd-agoric-relayer-1
@@ -46,4 +49,4 @@ cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
 #binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-5/ag0-agoric-upgrade-5-linux-amd64"
 #binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-6/ag0-agoric-upgrade-6-linux-amd64"
 #binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-7/ag0-agoric-upgrade-7-linux-amd64"
-binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-7-2/ag0-agoric-upgrade-7-2-linux-amd64"
+#binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-7-2/ag0-agoric-upgrade-7-2-linux-amd64"
