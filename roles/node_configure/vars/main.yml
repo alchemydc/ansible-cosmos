@@ -34,3 +34,5 @@ peer_limit_changes:
   'max_num_outbound_peers =': 'max_num_outbound_peers = {{ max_num_outbound_peers }}'
 log_level_changes:
   '^log_level = "info"': 'log_level = "{{ daemon_log_level }}"'
+gas_price_changes:
+  '^minimum-gas-prices =': 'minimum-gas-prices ="{{ minimum_gas_prices }}"' 

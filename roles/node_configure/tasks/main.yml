@@ -43,6 +43,13 @@
     line: '{{ item.value }}'
   loop: '{{ app_port_changes | dict2items }}'
 
+- name: Adjust gas prices in app.toml
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }}'
+  loop: '{{ gas_price_changes | dict2items }}'
+
 - name: Adjust pruning setting for main and backup
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'

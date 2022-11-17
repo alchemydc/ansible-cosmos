@@ -49,3 +49,5 @@ use_pex: true
 genesis_processing: "jq"
 
 install_nodejs: true
+
+minimum_gas_prices: "0.01ubld,0.005uist"
