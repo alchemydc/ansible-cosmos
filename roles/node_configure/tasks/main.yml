@@ -105,6 +105,14 @@
     state: present
   when: (type == 'backup' or type == 'main') and use_pex|bool == false
 
+- name: Enable pex reactor when manually overridden
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '^pex ='
+    line: 'pex = true'
+    state: present
+  when: use_pex|bool == true
+
 - name: Configure statesync
   import_tasks: roles/support_state_sync/tasks/main.yml
   #when: (use_statesync|bool == true) and (type == 'backup' or type == 'main')
