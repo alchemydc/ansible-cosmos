@@ -2,6 +2,10 @@
 - meta: end_play
   when: (prepare is defined) and (prepare|bool is false)
 
+- name: Refresh GPG keys for apt
+  command: 'apt-key adv --refresh-keys --keyserver keyserver.ubuntu.com'
+  tags: update_apt_keys
+
 - name: Update and upgrade the machine
   apt:
     upgrade: dist

@@ -1,0 +1,29 @@
+# Need to manually do "more genesis.json | jq .result.genesis >> genesis_new.json"
+network: canto
+folder: '.cantod'
+daemon: cantod
+chain_id: 'canto_7700-1'
+node_version: 'v5.0.0'
+repo: 'https://github.com/Canto-Network/Canto.git'
+#genesis: 'http://164.90.154.41:26657/genesis'
+genesis: 'https://snapshots.polkachu.com/genesis/canto/genesis.json'
+minimum_gas_price: '0.0001acanto'
+minimum_gas_prices: '0.0001acanto'
+peers: '158e1c4d2bc16a60467137fef13b4910857a69c4@65.108.131.174:55656'
+seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:15556'
+custom_port_prefix: 15
+#genesis_processing: "jq"
+statesync_uri: 'https://canto-rpc.polkachu.com:443'
+
+# [Optional] Snapshot
+snapshot_hour: 8
+snapshot_minute: 0
+
+#snapshot_method: 'rclone'
+#snapshot_storage: 'gcs'
+take_snapshots: false
+restore_snapshots: true
+snapshot_bucket: '{{ vault_canto_snapshot_bucket }}'
+gcloud_project_number: '{{ vault_canto_gcloud_project_number }}'
+
+daemon_log_level: "info"

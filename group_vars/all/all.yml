@@ -7,7 +7,8 @@ promtail_version: '2.7.1'
 promtail_checksum: '5b1033be27f8bb77cb4f5a836558b3f0719a989cd9add7c848800e4b2f59b394'
 
 # go
-go_version: '1.18.3'
+#go_version: '1.18.3'
+go_version: '1.19.5'
 
 # cosmovisor
 cosmovisor_version: 'v1.0.0'

@@ -53,3 +53,4 @@ cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
 #binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-7-2/ag0-agoric-upgrade-7-2-linux-amd64"
 
 minimum_gas_prices: "0.01ubld,0.005uist"
+scheduled_cleanup: false
