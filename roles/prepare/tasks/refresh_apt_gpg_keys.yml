@@ -1,0 +1,9 @@
+- name: Ensure gpg is installed
+  apt:
+    name: gnupg
+    state: present
+    update_cache: yes
+
+- name: Refresh GPG keys for apt
+  command: 'apt-key adv --refresh-keys --keyserver keyserver.ubuntu.com'
+  tags: update_apt_keys

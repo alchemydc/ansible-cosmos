@@ -101,5 +101,5 @@
 
 - name: Configure chaindata cleanup & restore automation
   import_tasks: roles/support_snapshot/tasks/cleanup.yml
-  when: cleanup|bool == true
+  when: (cleanup|bool == true and scheduled_cleanup|bool == true)
   tags: 'cleanup'

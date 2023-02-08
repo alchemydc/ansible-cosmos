@@ -3,8 +3,7 @@
   when: (prepare is defined) and (prepare|bool is false)
 
 - name: Refresh GPG keys for apt
-  command: 'apt-key adv --refresh-keys --keyserver keyserver.ubuntu.com'
-  tags: update_apt_keys
+  import_tasks: refresh_apt_gpg_keys.yml
 
 - name: Update and upgrade the machine
   apt:
