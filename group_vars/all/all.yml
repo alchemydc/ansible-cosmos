@@ -8,10 +8,12 @@ promtail_checksum: '5b1033be27f8bb77cb4f5a836558b3f0719a989cd9add7c848800e4b2f59
 
 # go
 #go_version: '1.18.3'
-go_version: '1.19.5'
+#go_version: '1.19.5'
+go_version: '1.20.1' # breaks cosmosvisor?
 
 # cosmovisor
-cosmovisor_version: 'v1.0.0'
+#cosmovisor_version: 'v1.0.0'
+cosmovisor_version: 'v1.4.0'
 
 # ssh_port
 ssh_port: 22
@@ -30,3 +32,5 @@ take_snapshots: false
 
 install_nodejs: false
 nodejs_version: "node_16.x"
+yarn_repo_key_url: "https://dl.yarnpkg.com/debian/pubkey.gpg" 
+nodesource_repo_key_url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"

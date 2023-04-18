@@ -4,7 +4,7 @@
     - name: Clone node repo
       git:
         repo: '{{ repo }}'
-        dest: '{{ user_dir }}/{{ network }}'
+        dest: '{{ user_dir }}/{{ network }}/{{ node_version }}'
         version: '{{ node_version }}'
         update: yes
         force: yes
@@ -13,7 +13,7 @@
     - name: Build and Install javascript sdk
       command: '{{ item }}'
       args:
-        chdir: '{{ user_dir }}/{{ network }}'
+        chdir: '{{ user_dir }}/{{ network }}/{{ node_version }}'
       with_items:
         - 'yarn install'
         - 'yarn build'
@@ -24,7 +24,7 @@
     - name: Build and Install golang binary
       command: '{{ item }}'
       args:
-        chdir: '{{ user_dir }}/{{ network }}/packages/cosmic-swingset'
+        chdir: '{{ user_dir }}/{{ network }}/{{ node_version }}/packages/cosmic-swingset'
       with_items:
         - 'make'
       environment:
@@ -35,7 +35,7 @@
     - name: Install node
       command: '{{ item }}'
       args:
-        chdir: '{{ user_dir }}/{{ network }}'
+        chdir: '{{ user_dir }}/{{ network }}/{{ node_version }}'
       with_items:
         - 'make install'
       environment:

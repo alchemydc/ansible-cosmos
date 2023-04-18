@@ -5,7 +5,8 @@ daemon: agd
 chain_id: 'agoric-3'
 #node_version: 'agoric-upgrade-7-2'
 #node_version: 'pismoA-rc4'
-node_version: 'pismoB'
+#node_version: 'pismoB'
+node_version: 'agoric-upgrade-9'
 #repo: 'https://github.com/Agoric/ag0'
 repo: 'https://github.com/Agoric/agoric-sdk'
 genesis: 'https://main.agoric.net/genesis.json'
@@ -34,7 +35,7 @@ gcloud_project_number: '{{ vault_gcloud_project_number }}'
 #gcp_token: "{{ vault_gcp_token }}"
 
 # [Optional] Statesync 
-use_statesync: true
+use_statesync: false
 statesync_uri: 'https://agoric-rpc.zanshindojo.org:443'
 
 # [Optional] Expose node p2p publicly (note: only works on relayer role)

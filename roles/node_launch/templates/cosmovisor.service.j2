@@ -6,9 +6,9 @@ StartLimitIntervalSec=30
 
 [Service]
 User={{ ansible_user }}
-ExecStart={{ user_dir }}/go/bin/cosmovisor start
-Restart=always
-RestartSec=3
+ExecStart={{ user_dir }}/go/bin/cosmovisor run start
+Restart=on-failure
+RestartSec=10
 LimitNOFILE=4096
 Environment="DAEMON_NAME={{ daemon }}"
 Environment="DAEMON_HOME={{ user_dir }}/{{ folder }}"
@@ -17,7 +17,8 @@ Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
 Environment="UNSAFE_SKIP_BACKUP=true"
 Environment="PATH=/usr/bin:{{ user_dir }}/go/bin"
 {% if install_nodejs == true %}
-Environment="PATH=/usr/bin:{{ user_dir }}/go/bin:{{ user_dir }}/{{ network }}/packages/cosmic-swingset/bin"
+#Environment="PATH=/usr/bin:{{ user_dir }}/go/bin:{{ user_dir }}/{{ network }}/packages/cosmic-swingset/bin"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/.agoric/cosmovisor/current/bin"
 {% endif %}
 
 [Install]

@@ -9,20 +9,34 @@
   command: "lsb_release -s -c"
   register: distro
 
-- name: add NodeSource GPG key
-  apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-    state: present
+#- name: add NodeSource GPG key
+#  apt_key:
+#    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+#    state: present
+
+- name: Add nodesource apt repository key.
+  ansible.builtin.get_url:
+    url: "{{ nodesource_repo_key_url }}"
+    dest: /etc/apt/trusted.gpg.d/nodesource.asc
+    mode: '0644'
+    force: true
 
 - name: Add NodeSource repo
   apt_repository: 
     repo: deb https://deb.nodesource.com/{{ nodejs_version }} {{ distro.stdout }} main
     state: present
 
-- name: add yarn GPG key
-  apt_key:
-    url: https://dl.yarnpkg.com/debian/pubkey.gpg
-    state: present
+#- name: add yarn GPG key
+#  apt_key:
+#    url: https://dl.yarnpkg.com/debian/pubkey.gpg
+#    state: present
+
+- name: Add yarn apt repository key.
+  ansible.builtin.get_url:
+    url: "{{ yarn_repo_key_url }}"
+    dest: /etc/apt/trusted.gpg.d/yarnpkg.asc
+    mode: '0644'
+    force: true
 
 - name: Add yarn repo
   apt_repository: 

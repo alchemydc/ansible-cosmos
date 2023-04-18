@@ -15,13 +15,39 @@
   with_items:
     - '{{ user_dir }}/{{ folder }}/cosmovisor/genesis/bin'
     - '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades'
+    - '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}'
+    - '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin'
 
 - name: copy daemon file to cosmovisor
   copy:
     src: '{{ user_dir }}/go/bin/{{ daemon }}'
-    dest: '{{ user_dir }}/{{ folder }}/cosmovisor/genesis/bin'
+    dest: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/{{ daemon }}'
     remote_src: true
     mode: '0755'
+
+- name: copy ag-cosmos-helper daemon file to cosmovisor
+  copy:
+    src: '{{ user_dir }}/go/bin/ag-cosmos-helper'
+    dest: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-cosmos-helper'
+    remote_src: true
+    mode: '0755'
+  when: network == 'agoric' or network == 'agoric-emerynet'
+
+
+- name: link ag-chain-cosmos daemon file to cosmovisor bin dir
+  file:
+    src: '{{ user_dir }}/{{ network }}/{{ node_version }}/packages/cosmic-swingset/bin/ag-chain-cosmos'
+    path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-chain-cosmos'
+    state: link
+  when: network is search("agoric")
+
+
+- name: link ag-nchainz daemon file to cosmovisor bin dir
+  file:
+    src: '{{ user_dir }}/{{ network }}/{{ node_version }}/packages/cosmic-swingset/bin/ag-nchainz'
+    path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-nchainz'
+    state: link
+  when: network is search("agoric")
 
 - name: copy service file
   become: true
