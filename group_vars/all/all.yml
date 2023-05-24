@@ -9,7 +9,7 @@ promtail_checksum: '5b1033be27f8bb77cb4f5a836558b3f0719a989cd9add7c848800e4b2f59
 # go
 #go_version: '1.18.3'
 #go_version: '1.19.5'
-go_version: '1.20.1' # breaks cosmosvisor?
+go_version: '1.20.2' # breaks cosmosvisor?
 
 # cosmovisor
 #cosmovisor_version: 'v1.0.0'

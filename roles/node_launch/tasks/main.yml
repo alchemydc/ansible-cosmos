@@ -18,21 +18,26 @@
     - '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}'
     - '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin'
 
-- name: copy daemon file to cosmovisor
-  copy:
+- name: link daemon file to cosmovisor
+  file:
     src: '{{ user_dir }}/go/bin/{{ daemon }}'
-    dest: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/{{ daemon }}'
-    remote_src: true
-    mode: '0755'
+    path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/{{ daemon }}'
+    state: link
+  when: network is not search("agoric")
 
-- name: copy ag-cosmos-helper daemon file to cosmovisor
-  copy:
-    src: '{{ user_dir }}/go/bin/ag-cosmos-helper'
-    dest: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-cosmos-helper'
-    remote_src: true
-    mode: '0755'
-  when: network == 'agoric' or network == 'agoric-emerynet'
+- name: link agoric daemon file to cosmovisor
+  file:
+    src: '{{ user_dir }}/{{ network }}/{{ node_version }}/golang/cosmos/build/{{ daemon }}'
+    path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/{{ daemon }}'
+    state: link
+  when: network is search("agoric")
 
+- name: link ag-cosmos-helper daemon file to cosmovisor
+  file:
+    src: '{{ user_dir }}/{{ network }}/{{ node_version }}/golang/cosmos/build/ag-cosmos-helper'
+    path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-cosmos-helper'
+    state: link
+  when: network is search("agoric")
 
 - name: link ag-chain-cosmos daemon file to cosmovisor bin dir
   file:
@@ -40,7 +45,6 @@
     path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-chain-cosmos'
     state: link
   when: network is search("agoric")
-
 
 - name: link ag-nchainz daemon file to cosmovisor bin dir
   file:

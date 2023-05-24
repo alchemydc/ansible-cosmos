@@ -1,19 +1,20 @@
 network: agorictest
 folder: '.agoric'
 daemon: agd
-chain_id: 'agoric-emerynet-5'
+chain_id: 'agoric-emerynet-6'
 #node_version: 'agoric-upgrade-7'
 #node_version: 'pismoA-rc4'
 #node_version: 'agoric-upgrade-8'
-node_version: 'agoric-upgrade-9'
+#node_version: 'agoric-upgrade-9'
+#node_version: 'mainnet1B-rc0'
+node_version: 'mainnet1B-rc1'
 #repo: 'https://github.com/Agoric/ag0'
 repo: 'https://github.com/Agoric/agoric-sdk'
 #binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-7/ag0-agoric-upgrade-7-linux-amd64"
 genesis: "https://emerynet.rpc.agoric.net:443/genesis"
-seeds: "42084028a65c5d609793ffc618d1dcbf374fc301@65.109.28.219:14456,0f04c4610b7511a64b8644944b907416db568590@34.135.175.105:26656"
-#peers: "fb86a0993c694c981a28fa1ebd1fd692f345348b@34.172.187.8:26656"
+seeds: "fb86a0993c694c981a28fa1ebd1fd692f345348b@34.171.162.87:26656"
 peers: ""
-custom_port_prefix: 44
+custom_port_prefix: 45
 
 # [Optional] Cosmos exporter
 denom: bld
