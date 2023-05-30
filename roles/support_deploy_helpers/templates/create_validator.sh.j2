@@ -1,0 +1,36 @@
+#!/bin/bash
+set -ex
+
+# get key with `agd tendermint show-validator`
+PUBKEY=$({{ daemon }} tendermint show-validator)
+NODE="tcp://localhost:{{ custom_port_prefix }}657"
+#DRY_RUN="--generate-only"
+DRY_RUN=""
+
+#KEY_NAME={{ faucet_address }}
+#MONIKER={{ moniker }}
+#WEBSITE={{ website }}
+#DETAILS={{ slogan }}
+#SECURITY_CONTACT={{ security_contact }}
+#IDENTITY={{ keybase_identity }}
+#CHAIN_NAME={{ chain_id }}
+
+{{ daemon }} --node $NODE tx staking create-validator \
+  --from={{ faucet_address }} \
+  --amount={{ min_self_delegation}}{{ denom }} \
+  --broadcast-mode=block \
+  --moniker={{ moniker }} \
+  --website={{ website }} \
+  --identity={{ keybase_identity }} \
+  --security-contact={{ security_contact }} \
+  --details={{ slogan }} \
+  --commission-rate={{ commission_rate }} \
+  --commission-max-rate={{ commission_max_rate }} \
+  --commission-max-change-rate={{ commission_max_change_rate }} \
+  --min-self-delegation={{ min_self_delegation }} \
+  --chain-id={{ chain_id }} \
+  --fees={{ fees }} \
+  --gas=auto \
+  --gas-adjustment=1.4 \
+  --pubkey="${PUBKEY}" \
+  "${DRY_RUN}"

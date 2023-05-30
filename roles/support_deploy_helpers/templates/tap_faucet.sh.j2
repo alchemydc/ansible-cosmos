@@ -1,0 +1,7 @@
+#!/bin/bash
+set -ex
+
+FAUCET_URI={{ faucet_uri }}
+FAUCET_ADDRESS={{ faucet_address }}
+
+curl "${FAUCET_URI}" --data-raw "address=${FAUCET_ADDRESS}&command=delegate"

@@ -1,0 +1,9 @@
+#!/bin/bash
+set -ex
+
+CHAIN_ID={{ chain_id }}
+VALIDATOR={{ validator_address }}
+KEY_NAME={{ faucet_address }}
+
+{{ daemon }} --node 'tcp://localhost:{{ custom_port_prefix}}657' \
+tx staking delegate ${VALIDATOR} "100000000{{ denom }}" --from=$KEY_NAME --chain-id=$CHAIN_ID --fees={{ fees }}

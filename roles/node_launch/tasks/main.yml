@@ -25,33 +25,39 @@
     state: link
   when: network is not search("agoric")
 
-- name: link agoric daemon file to cosmovisor
+- name: link agoric daemon file to cosmovisor (version > agoric-upgrade-9)
   file:
-    src: '{{ user_dir }}/{{ network }}/{{ node_version }}/golang/cosmos/build/{{ daemon }}'
+    src: '{{ user_dir }}/{{ network }}/{{ node_version }}/bin/{{ daemon }}'
     path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/{{ daemon }}'
     state: link
-  when: network is search("agoric")
+  when: network is search("agoric") and node_version != "agoric-upgrade-9"
 
-- name: link ag-cosmos-helper daemon file to cosmovisor
-  file:
-    src: '{{ user_dir }}/{{ network }}/{{ node_version }}/golang/cosmos/build/ag-cosmos-helper'
-    path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-cosmos-helper'
-    state: link
-  when: network is search("agoric")
-
-- name: link ag-chain-cosmos daemon file to cosmovisor bin dir
-  file:
-    src: '{{ user_dir }}/{{ network }}/{{ node_version }}/packages/cosmic-swingset/bin/ag-chain-cosmos'
-    path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-chain-cosmos'
-    state: link
-  when: network is search("agoric")
-
-- name: link ag-nchainz daemon file to cosmovisor bin dir
-  file:
-    src: '{{ user_dir }}/{{ network }}/{{ node_version }}/packages/cosmic-swingset/bin/ag-nchainz'
-    path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-nchainz'
-    state: link
-  when: network is search("agoric")
+- name: copy and link agoric binaries to cosmovisor (version == agoric-upgrade-9)
+  block:
+    - name: copy agd binary to cosmovisor dir
+      copy:
+        src: '{{ user_dir }}/go/bin/{{ daemon }}'
+        dest: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/{{ daemon }}'
+        owner: '{{ ansible_user }}'
+        group: '{{ ansible_user }}'
+        mode: '0755'
+        remote_src: yes
+    - name: link ag-cosmos-helper daemon file to cosmovisor
+      file:
+        src: '{{ user_dir }}/{{ network }}/{{ node_version }}/golang/cosmos/build/ag-cosmos-helper'
+        path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-cosmos-helper'
+        state: link
+    - name: link ag-chain-cosmos daemon file to cosmovisor bin dir
+      file:
+        src: '{{ user_dir }}/{{ network }}/{{ node_version }}/packages/cosmic-swingset/bin/ag-chain-cosmos'
+        path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-chain-cosmos'
+        state: link
+    - name: link ag-nchainz daemon file to cosmovisor bin dir
+      file:
+        src: '{{ user_dir }}/{{ network }}/{{ node_version }}/packages/cosmic-swingset/bin/ag-nchainz'
+        path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-nchainz'
+        state: link
+  when: network is search("agoric") and node_version == "agoric-upgrade-9"
 
 - name: copy service file
   become: true

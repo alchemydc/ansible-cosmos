@@ -1,0 +1,35 @@
+- name: debug  node_version
+  debug:
+    msg: 'node_version: {{ node_version }}'
+
+- name: create helper directory
+  file:
+    path: '{{ user_dir }}/helpers'
+    state: directory
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0755'
+
+- name: deploy helper script to tap faucet
+  template:
+    src: 'tap_faucet.sh.j2'
+    dest: '{{ user_dir }}/helpers/tap_faucet.sh'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0755'
+
+- name: deploy helper script to register validator
+  template:
+    src: 'create_validator.sh.j2'
+    dest: '{{ user_dir }}/helpers/create_validator.sh'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0755'
+
+- name: deploy helper script to self delegate to registered validator
+  template:
+    src: 'delegate.sh.j2'
+    dest: '{{ user_dir }}/helpers/delegate.sh'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0755'

@@ -1,0 +1,6 @@
+---
+- name: Deploy helper scripts
+  hosts: '{{ target }}'
+  gather_facts: false
+  roles:
+    - support_deploy_helpers
