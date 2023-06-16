@@ -28,7 +28,8 @@ rclone copy remote:{{ snapshot_bucket }}/addrbook.json {{ user_dir }}/{{ folder 
 echo "Finding the latest snapshot in the bucket"
 #SNAPSHOTS=$(rclone lsf remote:{{ snapshot_bucket }})
 #LATEST_SNAPSHOT=$(echo $SNAPSHOTS | tail -n 1)
-LATEST_SNAPSHOT=$(rclone lsf remote:{{ snapshot_bucket }} | tail -n 1)
+#LATEST_SNAPSHOT=$(rclone lsf remote:{{ snapshot_bucket }} | tail -n 1)
+LATEST_SNAPSHOT=$(rclone lsf --format 'tsp' remote:{{ snapshot_bucket }} | sort -nr | head -n 1 | cut -d ';' -f 3)
 
 # download latest snapshot
 echo "downloading and extracting the latest snapshot"
