@@ -47,6 +47,7 @@
   apt:
     name: 
      - nodejs
+     #- nodejs=18.20.0-deb-1nodesource1  #debian12 includes a 'nodejs' package that does *not* include npm, and hence breaks the build.
      - yarn
     state: present
     update_cache: true

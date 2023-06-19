@@ -25,14 +25,14 @@
     state: link
   when: network is not search("agoric")
 
-- name: link agoric daemon file to cosmovisor (version > agoric-upgrade-9)
+- name: link agoric daemon file to cosmovisor (version > agoric-upgrade-9 or pismoD)
   file:
     src: '{{ user_dir }}/{{ network }}/{{ node_version }}/bin/{{ daemon }}'
     path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/{{ daemon }}'
     state: link
-  when: network is search("agoric") and node_version != "agoric-upgrade-9"
+  when: network is search("agoric") and (node_version != "agoric-upgrade-9" and node_version != "pismoD")
 
-- name: copy and link agoric binaries to cosmovisor (version == agoric-upgrade-9)
+- name: copy and link agoric binaries to cosmovisor (version == agoric-upgrade-9 or pismoD)
   block:
     - name: copy agd binary to cosmovisor dir
       copy:
@@ -57,7 +57,7 @@
         src: '{{ user_dir }}/{{ network }}/{{ node_version }}/packages/cosmic-swingset/bin/ag-nchainz'
         path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ node_version }}/bin/ag-nchainz'
         state: link
-  when: network is search("agoric") and node_version == "agoric-upgrade-9"
+  when: network is search("agoric") and (node_version == "agoric-upgrade-9" or node_version == "pismoD")
 
 - name: copy service file
   become: true

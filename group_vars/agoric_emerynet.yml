@@ -1,23 +1,25 @@
 network: agorictest
 folder: '.agoric'
 daemon: agd
-chain_id: 'agoric-emerynet-6'
+chain_id: 'agoric-emerynet-8'
 #node_version: 'agoric-upgrade-7'
 #node_version: 'pismoA-rc4'
 #node_version: 'agoric-upgrade-8'
 #node_version: 'agoric-upgrade-9'
 #node_version: 'mainnet1B-rc0'
-node_version: 'mainnet1B-rc1'
+#node_version: 'mainnet1B-rc1'
+#node_version: 'mainnet1B-rc2'
+node_version: 'mainnet1B-rc3'
 #repo: 'https://github.com/Agoric/ag0'
 repo: 'https://github.com/Agoric/agoric-sdk'
 #binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-7/ag0-agoric-upgrade-7-linux-amd64"
 genesis: "https://emerynet.rpc.agoric.net:443/genesis"
-seeds: "fb86a0993c694c981a28fa1ebd1fd692f345348b@34.171.162.87:26656"
+seeds: "0f04c4610b7511a64b8644944b907416db568590@35.222.138.81:26656"
 peers: ""
 custom_port_prefix: 45
 
 # [Optional] Cosmos exporter
-denom: bld
+denom: ubld
 denom_prefix: agoric
 
 # [Optional] Snapshot
@@ -51,6 +53,6 @@ cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
 use_pex: true
 genesis_processing: "jq"
 
-install_nodejs: true
+minimum_gas_prices: "3600ubld,0.001uist"
 
-minimum_gas_prices: "0.01ubld,0.005uist"
+

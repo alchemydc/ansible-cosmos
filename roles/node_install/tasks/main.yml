@@ -19,7 +19,7 @@
         - 'yarn build'
       environment:
         PATH: '{{ path }}'
-      when: install_nodejs|bool == true
+      when: network is defined and network is search("agoric")
 
     - name: Build and Install golang binary
       command: '{{ item }}'
@@ -30,7 +30,7 @@
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
-      when: install_nodejs|bool == true
+      when: network is defined and network is search("agoric")
 
     - name: Install node
       command: '{{ item }}'
@@ -41,7 +41,7 @@
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
-      when: install_nodejs|bool == false
+      when: network is defined and network is not search("agoric")
   when: binary is undefined
 
 - name: Install from binary

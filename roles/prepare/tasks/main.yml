@@ -35,5 +35,5 @@
 
 - name: install nodejs
   import_tasks: nodejs.yml
-  when: install_nodejs is defined and install_nodejs|bool == true
+  when: network is defined and network is search("agoric")
   tags: install_nodejs
