@@ -32,6 +32,13 @@
     state: link
   when: network is search("agoric") and (node_version != "agoric-upgrade-9" and node_version != "pismoD")
 
+- name: link agoric daemon file to cosmovisor genesis (version > agoric-upgrade-9 or pismoD)
+  file:
+    src: '{{ user_dir }}/{{ network }}/{{ node_version }}/bin/{{ daemon }}'
+    path: '{{ user_dir }}/{{ folder }}/cosmovisor/genesis/bin/{{ daemon }}'
+    state: link
+  when: network is search("agoric") and (node_version != "agoric-upgrade-9" and node_version != "pismoD")
+
 - name: copy and link agoric binaries to cosmovisor (version == agoric-upgrade-9 or pismoD)
   block:
     - name: copy agd binary to cosmovisor dir

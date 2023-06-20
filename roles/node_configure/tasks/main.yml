@@ -121,3 +121,17 @@
 - name: Configure snapshots
   import_tasks: roles/support_snapshot/tasks/main.yml
   #when: (take_snapshots|bool == true) and (type == 'backup') or (restore_snapshots|bool == true)
+
+- name: Configure node_key.json
+  copy: 
+    content: '{{ node_key }}'
+    dest: '{{ user_dir }}/{{ folder }}/config/node_key.json'
+  when: node_key is defined
+  tags: 'node_key'
+
+- name: Configure permissions on node_key.json
+  file:
+    path: '{{ user_dir }}/{{ folder }}/config/node_key.json'
+    mode: '0600'
+  when: node_key is defined
+
