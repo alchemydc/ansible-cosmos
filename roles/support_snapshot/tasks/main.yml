@@ -22,12 +22,17 @@
     update_cache: yes
   when: snapshot_method is defined and snapshot_method == 'rclone'
 
+- name: debug snapshot_storage
+  debug:
+    msg: "{{ snapshot_storage }}"
+
 - name: Ensure that the user's .config folder exists
   file:
     path: '{{ user_dir }}/.config'
     state: directory
     mode: '0750'
-  when: snapshot_storage is defined and snapshot_storage == "gcs"
+  #when: snapshot_storage is defined and snapshot_storage == "gcs"
+  when: snapshot_storage is defined and snapshot_storage is contains('gcs')
 
 - name: Deploy gcloud service account key
   copy:
@@ -36,7 +41,8 @@
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0600'
-  when: snapshot_storage is defined and snapshot_storage == "gcs"
+  #when: snapshot_storage is defined and snapshot_storage == "gcs"
+  when: snapshot_storage is defined and snapshot_storage is contains('gcs')
 
 - name: Create rclone config directory
   file:

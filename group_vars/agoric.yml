@@ -25,14 +25,20 @@ snapshot_minute: 30
 #snapshot_method: 'aws'
 #snapshot_method: 'gcloud'
 snapshot_method: 'rclone'
-snapshot_storage: 'gcs'
+#snapshot_storage: 'gcs'
+snapshot_storage:
+  - 'gcs'
+  - 'b2'
 take_snapshots: true
 restore_snapshots: true
 snapshot_bucket: '{{ vault_snapshot_bucket }}'
 gcloud_project_number: '{{ vault_gcloud_project_number }}'
-
 # sensitive data
 #gcp_token: "{{ vault_gcp_token }}"
+b2_account_id: "{{ vault_b2_account_id }}"
+b2_application_key: "{{ vault_b2_application_key }}"
+b2_bucket: "{{ vault_b2_bucket }}"
+
 
 # [Optional] Statesync 
 use_statesync: false

@@ -5,49 +5,45 @@
     state: present
     update_cache: true
 
-- name: get distro
-  command: "lsb_release -s -c"
-  register: distro
-
-#- name: add NodeSource GPG key
-#  apt_key:
-#    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-#    state: present
+- name: Ensure /etc/apt/keyrings directory exists # exists out of the box on debian >= 12
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
 
 - name: Add nodesource apt repository key.
   ansible.builtin.get_url:
     url: "{{ nodesource_repo_key_url }}"
-    dest: /etc/apt/trusted.gpg.d/nodesource.asc
+    dest: /etc/apt/keyrings/nodesource.asc
     mode: '0644'
     force: true
 
 - name: Add NodeSource repo
   apt_repository: 
-    repo: deb https://deb.nodesource.com/{{ nodejs_version }} {{ distro.stdout }} main
+    filename: nodesource.list
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource.asc] https://deb.nodesource.com/{{ nodejs_version }} {{ ansible_facts['distribution_release'] }} main"
     state: present
-
-#- name: add yarn GPG key
-#  apt_key:
-#    url: https://dl.yarnpkg.com/debian/pubkey.gpg
-#    state: present
 
 - name: Add yarn apt repository key.
   ansible.builtin.get_url:
     url: "{{ yarn_repo_key_url }}"
-    dest: /etc/apt/trusted.gpg.d/yarnpkg.asc
+    dest: /etc/apt/keyrings/yarnpkg.asc
     mode: '0644'
     force: true
 
 - name: Add yarn repo
   apt_repository: 
-    repo: deb https://dl.yarnpkg.com/debian stable main
+    filename: yarnpkg.list
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/yarnpkg.asc] https://dl.yarnpkg.com/debian stable main"
     state: present
 
 - name: Install nodejs and yarn
   apt:
     name: 
      - nodejs
-     #- nodejs=18.20.0-deb-1nodesource1  #debian12 includes a 'nodejs' package that does *not* include npm, and hence breaks the build.
+     #- nodejs=18.20.0-deb-1nodesource1  #debian12 includes a 'nodejs' package that does *not* include npm, and hence breaks the build if the debian maintainer's version of node is higher than the nodesource one
      - yarn
     state: present
     update_cache: true

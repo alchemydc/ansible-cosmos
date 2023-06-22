@@ -27,8 +27,11 @@
   import_tasks: cosmos_software.yml
   when: cosmos_software|default(true)|bool == true
 
+ # rsyslog is not available on debian 12 by default
 - name: configure rsyslog
   import_tasks: rsyslog.yml
+  when: ansible_facts['distribution_release'] != "12"
+  tags: rsyslog
 
 - name: configure vim
   import_tasks: vim.yml

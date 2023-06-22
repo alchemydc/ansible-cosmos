@@ -7,7 +7,6 @@ promtail_version: '2.7.1'
 promtail_checksum: '5b1033be27f8bb77cb4f5a836558b3f0719a989cd9add7c848800e4b2f59b394'
 
 # go
-#go_version: '1.20.4'
 go_version: '1.20.5'
 
 # cosmovisor
@@ -34,4 +33,6 @@ install_nodejs: false
 nodejs_version: "node_18.x"
 yarn_repo_key_url: "https://dl.yarnpkg.com/debian/pubkey.gpg" 
 nodesource_repo_key_url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+node_exporter: false
+promtail: false
 

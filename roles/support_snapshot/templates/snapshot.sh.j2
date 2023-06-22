@@ -36,11 +36,21 @@ rclone copy --gcs-bucket-policy-only {{ user_dir }}/{{ folder }}/config/addrbook
 echo "Restarting {{ network }} daemon"
 sudo systemctl start {{ network }}
 
-# Transfer the file and then remove the file
-echo "Copying the file to persistent storage"
+{% if snapshot_storage is defined and snapshot_storage is contains("gcs") %}
+# Transfer the file to GCS
+echo "Copying the file to persistent storage on GCS"
 cd {{ user_dir }}/
-#aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $FILENAME "s3://snapshots/{{ network }}/" --profile={{ snapshot_profile }}
 rclone copy --gcs-bucket-policy-only $FILENAME remote:{{ snapshot_bucket }}
-rm -v $FILENAME
+{% endif %}
 
+{% if snapshot_storage is defined and snapshot_storage is contains("b2") %}
+# Transfer the file to B2
+echo "Copying the file to persistent storage on B2"
+cd {{ user_dir }}/
+rclone copyto $FILENAME b2:{{ b2_bucket }}/sdl-agoric-snapshot.tar.lz4
+{% endif %}
+
+#remove the file
+echo "removing the file after uploading"
+rm -v $FILENAME
 
