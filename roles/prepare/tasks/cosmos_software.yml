@@ -14,25 +14,6 @@
     - curl
     - lsb-release
 
-- name: Download go
-  get_url:
-    url: 'https://golang.org/dl/go{{ go_version }}.linux-amd64.tar.gz'
-    dest: '/tmp/go{{ go_version }}.linux-amd64.tar.gz'
-    mode: '0700'
-
-- name: Remove existing go installation
-  command: "rm -rf /usr/local/go"
-  ignore_errors: yes
-
-- name: unarchive go
-  unarchive:
-    src: '/tmp/go{{ go_version }}.linux-amd64.tar.gz'
-    remote_src: yes
-    dest: '/usr/local/'
-    owner: root
-    group: root
-    mode: '0755'
-
 - name: Go get cosmovisor
   #command: 'go install github.com/cosmos/cosmos-sdk/cosmovisor/cmd/cosmovisor@{{ cosmovisor_version }}'
   command: 'go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@{{ cosmovisor_version }}'

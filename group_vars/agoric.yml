@@ -43,6 +43,7 @@ b2_bucket: "{{ vault_b2_bucket }}"
 # [Optional] Statesync 
 use_statesync: false
 statesync_uri: 'https://agoric-rpc.zanshindojo.org:443'
+# statesync_uri: 'https://agoric-rpc.polkachu.com:443'
 
 # [Optional] Expose node p2p publicly (note: only works on relayer role)
 expose_public_ip: false

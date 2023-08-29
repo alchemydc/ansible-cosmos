@@ -23,14 +23,21 @@
   import_tasks: firewall.yml
   tags: firewall
 
+- name: install golang
+  import_tasks: install_golang.yml
+
 - name: install cosmos software
   import_tasks: cosmos_software.yml
   when: cosmos_software|default(true)|bool == true
 
+- name: debug distribution_release
+  debug:
+    msg: "distribution_release: {{ ansible_facts['distribution_release'] }}"
+
  # rsyslog is not available on debian 12 by default
 - name: configure rsyslog
   import_tasks: rsyslog.yml
-  when: ansible_facts['distribution_release'] != "12"
+  when: ansible_facts['distribution_release'] != "bookworm"
   tags: rsyslog
 
 - name: configure vim

@@ -25,6 +25,7 @@
 - name: debug snapshot_storage
   debug:
     msg: "{{ snapshot_storage }}"
+  when: snapshot_storage is defined
 
 - name: Ensure that the user's .config folder exists
   file:

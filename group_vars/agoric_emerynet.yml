@@ -10,6 +10,7 @@ chain_id: 'agoric-emerynet-8'
 #node_version: 'mainnet1B-rc1'
 #node_version: 'mainnet1B-rc2'
 node_version: 'mainnet1B-rc3'
+#node_version: 'agoric-upgrade-11-rc0'
 #repo: 'https://github.com/Agoric/ag0'
 repo: 'https://github.com/Agoric/agoric-sdk'
 #binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-7/ag0-agoric-upgrade-7-linux-amd64"
