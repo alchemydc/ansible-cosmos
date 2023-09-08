@@ -8,7 +8,8 @@ promtail_checksum: '5b1033be27f8bb77cb4f5a836558b3f0719a989cd9add7c848800e4b2f59
 
 # go
 #go_version: '1.20.5'
-go_version: '1.21.0'
+#go_version: '1.21.0'
+go_version: '1.21.1'
 
 # cosmovisor
 #cosmovisor_version: 'v1.0.0'
