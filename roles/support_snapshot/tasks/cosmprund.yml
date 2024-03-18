@@ -23,7 +23,7 @@
       git:
         repo: '{{ cosmprund_repo }}'
         dest: '{{ user_dir }}/cosmprund'
-        #version: '{{ node_version }}'
+        version: '{{ cosmprund_version }}'
         update: yes
         force: yes
         depth: 1

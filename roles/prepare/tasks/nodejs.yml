@@ -42,8 +42,9 @@
 - name: Install nodejs and yarn
   apt:
     name: 
-     - nodejs
-     #- nodejs=18.20.0-deb-1nodesource1  #debian12 includes a 'nodejs' package that does *not* include npm, and hence breaks the build if the debian maintainer's version of node is higher than the nodesource one
+     #- nodejs
+     # - nodejs=18.20.0-deb-1nodesource1  #debian12 includes a 'nodejs' package that does *not* include npm, and hence breaks the build if the debian maintainer's version of node is higher than the nodesource one
+     - nodejs=18.17.1-deb-1nodesource1
      - yarn
     state: present
     update_cache: true

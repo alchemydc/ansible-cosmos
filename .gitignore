@@ -6,3 +6,4 @@ roles/support_seed/templates/node_key.json.j2
 vault.yml
 private/
 ansible.cfg
+.DS_Store
