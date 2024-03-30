@@ -8,7 +8,10 @@ chain_id: 'agoric-3'
 #node_version: 'agoric-upgrade-9'
 #node_version: "pismoD"
 #node_version: "mainnet1B-rc3"
-node_version: "agoric-upgrade-11"
+#node_version: "agoric-upgrade-11"
+#node_version: "agoric-upgrade-12"
+#node_version: "agoric-upgrade-13"
+node_version: "agoric-upgrade-14"
 repo: 'https://github.com/Agoric/agoric-sdk'
 genesis: 'https://main.agoric.net/genesis.json'
 seeds: 'ecb5a8127b6d6ce8ee2ee40678a3bb69af04d8e4@10.10.50.110:44656,524f657dbca01fdebbebcb3f85873608237ce967@10.10.50.111:44656'  # zd-agoric-relayer-0, # zd-agoric-relayer-1
@@ -42,9 +45,9 @@ b2_bucket: "{{ vault_b2_bucket }}"
 
 
 # [Optional] Statesync 
-use_statesync: false
-statesync_uri: 'https://agoric-rpc.zanshindojo.org:443'
-# statesync_uri: 'https://agoric-rpc.polkachu.com:443'
+use_statesync: true
+#statesync_uri: 'https://agoric-rpc.zanshindojo.org:443'
+statesync_uri: 'https://agoric-rpc.polkachu.com:443'
 
 # [Optional] Expose node p2p publicly (note: only works on relayer role)
 expose_public_ip: false

@@ -9,9 +9,14 @@ promtail_checksum: '5b1033be27f8bb77cb4f5a836558b3f0719a989cd9add7c848800e4b2f59
 # go
 #go_version: '1.20.5'
 #go_version: '1.21.0'
-go_version: '1.21.1'
+#go_version: '1.21.1'
+#go_version: '1.21.4'
+#go_version: '1.21.5'
+#go_version: '1.22.0'
+go_version: '1.22.1'
 
 # cosmovisor
+# https://github.com/cosmos/cosmos-sdk/releases?q=cosmovisor&expanded=true
 #cosmovisor_version: 'v1.0.0'
 #cosmovisor_version: 'v1.4.0'
 cosmovisor_version: 'v1.5.0'
@@ -28,6 +33,8 @@ use_statesync: false
 # repo for cosmos-pruner
 # required for backup role if take_snapshots == true
 cosmprund_repo: 'https://github.com/binaryholdings/cosmprund'
+#cosmprund_version: 'v1.0.0' # doesn't work
+cosmprund_version: 'd3bf3d86df645a14a40eb6f693fd698b22cf7760' #feb 2023
 
 take_snapshots: false
 

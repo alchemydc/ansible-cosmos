@@ -39,12 +39,21 @@
     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/yarnpkg.asc] https://dl.yarnpkg.com/debian stable main"
     state: present
 
+- name: Add preference for NodeSource
+  copy:
+    dest: /etc/apt/preferences.d/nodesource
+    content: |
+      Package: nodejs
+      Pin: origin "deb.nodesource.com"
+      Pin-Priority: 1001
+
 - name: Install nodejs and yarn
   apt:
     name: 
-     #- nodejs
+     - nodejs
      # - nodejs=18.20.0-deb-1nodesource1  #debian12 includes a 'nodejs' package that does *not* include npm, and hence breaks the build if the debian maintainer's version of node is higher than the nodesource one
-     - nodejs=18.17.1-deb-1nodesource1
+     #- nodejs=18.17.1-deb-1nodesource1
      - yarn
     state: present
     update_cache: true
+    allow_downgrade: yes
