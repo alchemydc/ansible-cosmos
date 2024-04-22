@@ -13,9 +13,8 @@ chain_id: 'agoric-emerynet-8'
 #node_version: 'agoric-upgrade-12-rc0'
 #node_version: 'agoric-upgrade-13-rc0'
 #node_version: 'agoric-upgrade-14-rc0'
-node_version: 'agoric-upgrade-14-rc1'
-#node_version: 'agoric-upgrade-11-rc0'
-#repo: 'https://github.com/Agoric/ag0'
+#node_version: 'agoric-upgrade-14-rc1'
+node_version: 'agoric-upgrade-15-rc0'
 repo: 'https://github.com/Agoric/agoric-sdk'
 #binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-7/ag0-agoric-upgrade-7-linux-amd64"
 genesis: "https://emerynet.rpc.agoric.net:443/genesis"
