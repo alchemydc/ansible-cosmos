@@ -46,8 +46,13 @@ b2_bucket: "{{ vault_b2_bucket }}"
 
 # [Optional] Statesync 
 use_statesync: true
+# 1000 is normal for most cosmos-sdk chains, but agoric takes so long to take a state-sync snapshot that we need to trust snapshots that are 5000 blocks old
+statesync_trust_height_offset: 2000
+#statesync_trust_period: "420h0m0s"
+statesync_trust_period: "168h0m0s"
 #statesync_uri: 'https://agoric-rpc.zanshindojo.org:443'
 statesync_uri: 'https://agoric-rpc.polkachu.com:443'
+statesync_rpc_servers: "https://main.rpc.agoric.net:443,https://agoric-rpc.zanshindojo.org:443,https://agoric-rpc.polkachu.com:443,https://rpc.agoric.nodestake.top:443,https://agoric.rpc.kjnodes.com:443"
 
 # [Optional] Expose node p2p publicly (note: only works on relayer role)
 expose_public_ip: false
