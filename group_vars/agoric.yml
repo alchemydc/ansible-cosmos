@@ -14,8 +14,7 @@ chain_id: 'agoric-3'
 node_version: "agoric-upgrade-14"
 repo: 'https://github.com/Agoric/agoric-sdk'
 genesis: 'https://main.agoric.net/genesis.json'
-seeds: 'ecb5a8127b6d6ce8ee2ee40678a3bb69af04d8e4@10.10.50.110:44656,524f657dbca01fdebbebcb3f85873608237ce967@10.10.50.111:44656'  # zd-agoric-relayer-0, # zd-agoric-relayer-1
-peers: 'ecb5a8127b6d6ce8ee2ee40678a3bb69af04d8e4@10.10.50.110:44656,524f657dbca01fdebbebcb3f85873608237ce967@10.10.50.111:44656'  # zd-agoric-relayer-0, # zd-agoric-relayer-1
+seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:14456,400f3d9e30b69e78a7fb891f60d76fa3c73f0ecc@agoric.rpc.kjnodes.com:12759'
 custom_port_prefix: 44
 
 # [Optional] Cosmos exporter
@@ -33,8 +32,9 @@ snapshot_method: 'rclone'
 snapshot_storage:
   - 'gcs'
   - 'b2'
-take_snapshots: true
+take_snapshots: false
 restore_snapshots: true
+snapshot_uri: "https://snapshots.kjnodes.com/agoric/snapshot_latest.tar.lz4"
 snapshot_bucket: '{{ vault_snapshot_bucket }}'
 gcloud_project_number: '{{ vault_gcloud_project_number }}'
 # sensitive data
