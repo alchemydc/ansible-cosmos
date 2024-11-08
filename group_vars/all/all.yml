@@ -14,7 +14,10 @@ promtail_checksum: '5b1033be27f8bb77cb4f5a836558b3f0719a989cd9add7c848800e4b2f59
 #go_version: '1.21.5'
 #go_version: '1.22.0'
 #go_version: '1.22.1'
-go_version: '1.22.2'
+#go_version: '1.22.2'
+#go_version: '1.22.5'
+#go_version: '1.23.1'
+go_version: '1.23.3'
 
 # cosmovisor
 # https://github.com/cosmos/cosmos-sdk/releases?q=cosmovisor&expanded=true
@@ -41,9 +44,12 @@ take_snapshots: false
 
 install_nodejs: false
 #nodejs_version: "node_16.x"
-nodejs_version: "node_18.x"
+#nodejs_version: "node_18.x"
+nodejs_version: "node_20.x"
 yarn_repo_key_url: "https://dl.yarnpkg.com/debian/pubkey.gpg" 
-nodesource_repo_key_url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+#nodesource_repo_key_url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+nodesource_repo_key_url: "https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key"
+
 node_exporter: false
 promtail: false
 

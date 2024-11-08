@@ -2,6 +2,7 @@
   apt:
     name: 
      - gnupg 
+     - apt-transport-https
     state: present
     update_cache: true
 
@@ -22,8 +23,10 @@
 
 - name: Add NodeSource repo
   apt_repository: 
-    filename: nodesource.list
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource.asc] https://deb.nodesource.com/{{ nodejs_version }} {{ ansible_facts['distribution_release'] }} main"
+    filename: nodesource
+    #repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource.asc] https://deb.nodesource.com/{{ nodejs_version }} {{ ansible_facts['distribution_release'] }} main"
+    #repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource.asc] https://deb.nodesource.com/{{ nodejs_version }} nodistro main"
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource.asc] https://deb.nodesource.com/{{ nodejs_version }} nodistro main"
     state: present
 
 - name: Add yarn apt repository key.
@@ -35,11 +38,11 @@
 
 - name: Add yarn repo
   apt_repository: 
-    filename: yarnpkg.list
+    filename: yarnpkg
     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/yarnpkg.asc] https://dl.yarnpkg.com/debian stable main"
     state: present
 
-- name: Add preference for NodeSource
+- name: Add preference for NodeSource for nodejs
   copy:
     dest: /etc/apt/preferences.d/nodesource
     content: |
@@ -47,12 +50,18 @@
       Pin: origin "deb.nodesource.com"
       Pin-Priority: 1001
 
+- name: Add preference for yarnpkg for yarn
+  copy:
+    dest: /etc/apt/preferences.d/yarnpkg
+    content: |
+      Package: yarn
+      Pin: origin "dl.yarnpkg.com"
+      Pin-Priority: 1001
+
 - name: Install nodejs and yarn
   apt:
     name: 
      - nodejs
-     # - nodejs=18.20.0-deb-1nodesource1  #debian12 includes a 'nodejs' package that does *not* include npm, and hence breaks the build if the debian maintainer's version of node is higher than the nodesource one
-     #- nodejs=18.17.1-deb-1nodesource1
      - yarn
     state: present
     update_cache: true

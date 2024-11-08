@@ -14,7 +14,12 @@ chain_id: 'agoric-emerynet-8'
 #node_version: 'agoric-upgrade-13-rc0'
 #node_version: 'agoric-upgrade-14-rc0'
 #node_version: 'agoric-upgrade-14-rc1'
-node_version: 'agoric-upgrade-15-rc0'
+#node_version: 'agoric-upgrade-15-rc0'
+#node_version: 'agoric-upgrade-16-rc1'
+#node_version: 'agoric-upgrade-16-rc2'
+#node_version: 'agoric-upgrade-16-rc3'
+#node_version: 'agoric-upgrade-17-rc1'
+node_version: 'agoric-upgrade-18-rc0'
 repo: 'https://github.com/Agoric/agoric-sdk'
 #binary: "https://github.com/Agoric/ag0/releases/download/agoric-upgrade-7/ag0-agoric-upgrade-7-linux-amd64"
 genesis: "https://emerynet.rpc.agoric.net:443/genesis"
@@ -38,6 +43,7 @@ take_snapshots: true
 restore_snapshots: true
 snapshot_bucket: '{{ vault_emerynet_snapshot_bucket }}'
 gcloud_project_number: '{{ vault_emerynet_gcloud_project_number }}'
+snapshot_uri: "https://snapshots.kjnodes.com/agoric-testnet/snapshot_latest.tar.lz4"
 
 # sensitive data
 #gcp_token: "{{ vault_gcp_token }}"
