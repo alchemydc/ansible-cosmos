@@ -14,6 +14,14 @@
     owner: root
     group: root
 
+- name: Ensure {{ user_dir }}/.node/bin directory exists
+  ansible.builtin.file:
+    path: "{{ user_dir }}/.node/bin"
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
 - name: Add nodesource apt repository key.
   ansible.builtin.get_url:
     url: "{{ nodesource_repo_key_url }}"
@@ -29,19 +37,6 @@
     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/nodesource.asc] https://deb.nodesource.com/{{ nodejs_version }} nodistro main"
     state: present
 
-- name: Add yarn apt repository key.
-  ansible.builtin.get_url:
-    url: "{{ yarn_repo_key_url }}"
-    dest: /etc/apt/keyrings/yarnpkg.asc
-    mode: '0644'
-    force: true
-
-- name: Add yarn repo
-  apt_repository: 
-    filename: yarnpkg
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/yarnpkg.asc] https://dl.yarnpkg.com/debian stable main"
-    state: present
-
 - name: Add preference for NodeSource for nodejs
   copy:
     dest: /etc/apt/preferences.d/nodesource
@@ -50,19 +45,21 @@
       Pin: origin "deb.nodesource.com"
       Pin-Priority: 1001
 
-- name: Add preference for yarnpkg for yarn
-  copy:
-    dest: /etc/apt/preferences.d/yarnpkg
-    content: |
-      Package: yarn
-      Pin: origin "dl.yarnpkg.com"
-      Pin-Priority: 1001
-
-- name: Install nodejs and yarn
+- name: Install nodejs
   apt:
     name: 
      - nodejs
-     - yarn
     state: present
     update_cache: true
     allow_downgrade: yes
+
+- name: Enable corepack
+  ansible.builtin.command:
+    cmd: corepack enable
+  changed_when: false
+
+- name: Configure yarn version using corepack
+  ansible.builtin.command:
+    cmd: corepack prepare yarn@4.9.1 --activate
+  changed_when: true
+

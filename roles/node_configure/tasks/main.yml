@@ -135,3 +135,11 @@
     mode: '0600'
   when: node_key is defined
 
+- name: Set iavl-disable-fastnode to true in app.toml
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: 'iavl-disable-fastnode ='
+    line: 'iavl-disable-fastnode = true'
+    state: present
+  when: iavl_disable_fastnode|bool == true
+
