@@ -16,12 +16,13 @@ Environment="UNSAFE_SKIP_BACKUP=true"
 {% if network is search("agoric") %}
 # agoric specific config variables
 #Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/.agoric/cosmovisor/current/bin"
-Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin::/usr/local/go/bin:$HOME/.agoric/cosmovisor/current/bin"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin:{{ user_dir }}/{{ folder }}/cosmovisor/current/bin"
 LimitNOFILE=65535
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
+WorkingDirectory={{ user_dir }}/{{ folder }}
 {% else %}
 LimitNOFILE=4096
-Environment="PATH=/usr/bin:{{ user_dir }}/go/bin
+Environment="PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/bin:/usr/local/go/bin:{{ user_dir }}/go/bin:{{ user_dir }}/{{ folder }}/cosmovisor/current/bin"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
 {% endif %}
 
